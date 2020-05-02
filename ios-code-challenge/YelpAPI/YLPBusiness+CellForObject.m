@@ -8,8 +8,10 @@
 
 #import "YLPBusiness+CellForObject.h"
 #import "NXTBusinessTableViewCell.h"
+#import <ios_code_challenge-Swift.h>
 
 NSString *const kNXTBusinessTableViewCellIdentifier = @"NXTBusinessTableViewCellIdentifier";
+NSString *const cell = @"cell";
 
 @implementation YLPBusiness (CellForObject)
 
@@ -19,9 +21,11 @@ NSString *const kNXTBusinessTableViewCellIdentifier = @"NXTBusinessTableViewCell
     id<NXTBindingDataForObjectDelegate> cell = [tableView dequeueReusableCellWithIdentifier:kNXTBusinessTableViewCellIdentifier];
     
     if(!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([NXTBusinessTableViewCell class])
-                                              owner:nil
-                                            options:nil] firstObject];
+        cell = [[NXTBusinessTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cell];
+      
+      //[[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([NXTBusinessTableViewCell class])
+        //                                      owner:nil
+          //                                  options:nil] firstObject];
     }
     
     return cell;

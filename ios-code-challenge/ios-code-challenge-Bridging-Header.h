@@ -3,8 +3,10 @@
 //
 
 #import "NXTDataSource.h"
+#import "YLPBusiness.h"
 #import "YLPSearchQuery.h"
 #import "AFYelpAPIClient.h"
 #import "AFYelpAPIClient+Search.h"
 #import "YLPSearch.h"
 #import "YLPBusiness.h"
+#import "NXTBindingDataForObjectDelegate.h"

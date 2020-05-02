@@ -8,6 +8,7 @@
 
 #import "NXTBusinessTableViewCell.h"
 #import "NXTBindingDataForObjectDelegate.h"
+#import <ios_code_challenge-Swift.h>
 
 @class YLPBusiness;
 

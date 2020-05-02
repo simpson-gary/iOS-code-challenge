@@ -13,8 +13,12 @@
 - (instancetype)initWithAttributes:(NSDictionary *)attributes
 {
     if(self = [super init]) {
+        _distance = attributes[@"distance"];
         _identifier = attributes[@"id"];
+        _imageUrl = attributes[@"image_url"];
         _name = attributes[@"name"];
+        _rating = attributes[@"rating"];
+        _reviewCount = attributes[@"review_count"];
     }
     
     return self;

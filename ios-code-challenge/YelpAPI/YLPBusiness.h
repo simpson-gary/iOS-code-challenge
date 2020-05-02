@@ -15,9 +15,29 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithAttributes:(NSDictionary *)attributes;
 
 /**
+ *  Yelp distance of this business.
+ */
+@property (nonatomic, readonly, copy) NSNumber *distance;
+
+/**
  *  Yelp id of this business.
  */
 @property (nonatomic, readonly, copy) NSString *identifier;
+
+/**
+ *  Yelp rating of this business.
+ */
+@property (nonatomic, readonly, copy) NSNumber *rating;
+
+/**
+ *  Yelp review count of this business.
+ */
+@property (nonatomic, readonly, copy) NSString *reviewCount;
+
+/**
+ *  Yelp imageUrl of this business.
+ */
+@property (nonatomic, readonly, copy) NSString *imageUrl;
 
 /**
  *  Name of this business.
