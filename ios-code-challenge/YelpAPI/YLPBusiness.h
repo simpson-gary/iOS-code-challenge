@@ -29,6 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly, copy) NSString *identifier;
 
+/**
+ *  Yelp price of this business.
+ */
+@property (nonatomic, readonly, copy) NSString *price;
 
 /**
  *  Yelp rating of this business.

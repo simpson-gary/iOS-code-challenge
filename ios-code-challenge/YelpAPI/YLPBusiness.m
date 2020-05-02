@@ -17,6 +17,7 @@
     _identifier = attributes[@"id"];
     _imageUrl = attributes[@"image_url"];
     _name = attributes[@"name"];
+    _price = attributes[@"price"];
     _rating = attributes[@"rating"];
     _reviewCount = attributes[@"review_count"];
     _categories = [self.class categoriesFromJSONArray:attributes[@"categories"]];

@@ -34,9 +34,9 @@ class DetailViewController: UIViewController {
         detailDescriptionLabel.text = detailItem.description
     }
     
-    func setDetailItem(newDetailItem: NSDate) {
+    func setDetailItem(newDetailItem: YLPBusiness) {
         guard detailItem != newDetailItem else { return }
-        detailItem = newDetailItem
+        //detailItem = newDetailItem
         configureView()
     }
     

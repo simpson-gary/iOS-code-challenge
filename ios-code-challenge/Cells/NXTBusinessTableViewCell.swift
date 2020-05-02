@@ -13,7 +13,7 @@ import UIKit
   var business: YLPBusiness? {
     didSet {
       businessNameLabel.text = business?.name
-      businessRatingCount.text = "\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
+      businessRatingCount.text = "★\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
       businessDescriptionLabel.text = "\(business?.distance ?? 0)* "
       businessCaptionLabel.text = business?.categories
     }
