@@ -13,7 +13,7 @@ import UIKit
   var business: YLPBusiness? {
     didSet {
       businessNameLabel.text = business?.name
-      businessRatingCount.text = business?.rating.stringValue
+      businessRatingCount.text = "\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
       businessDescriptionLabel.text = "\(business?.distance ?? 0)* "
       businessCaptionLabel.text = business?.categories
     }
@@ -85,7 +85,7 @@ import UIKit
     
     businessCaptionLabel.anchor(top: businessDescriptionLabel.bottomAnchor, left: businessImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0/*frame.size.width / 2*/, height: 0, enableInsets: false)
     
-    let stackView = UIStackView(arrangedSubviews: [decreaseButton,businessRatingCount,increaseButton])
+    let stackView = UIStackView(arrangedSubviews: [businessRatingCount])// [decreaseButton,businessRatingCount,increaseButton])
     stackView.distribution = .equalSpacing
     stackView.axis = .horizontal
     stackView.spacing = 5

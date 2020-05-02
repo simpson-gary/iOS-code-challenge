@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Yelp review count of this business.
  */
-@property (nonatomic, readonly, copy) NSString *reviewCount;
+@property (nonatomic, readonly, copy) NSNumber *reviewCount;
 
 /**
  *  Yelp imageUrl of this business.

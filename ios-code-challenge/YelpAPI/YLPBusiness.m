@@ -28,14 +28,15 @@
 + (NSString *)categoriesFromJSONArray:(NSArray *)categoriesJSON
 {
   NSMutableString *mutableCategoriesJSON = [[NSMutableString alloc] init];
+  
+  for (NSDictionary *categories in categoriesJSON) {
+    if (categories != categoriesJSON.firstObject)
+      [mutableCategoriesJSON appendString: @", "];
     
-    for (NSArray *string in categoriesJSON) {
-      if (mutableCategoriesJSON != nil) {
-        mutableCategoriesJSON = "";//mutableCategoriesJSON + ", " + string;
-      };
-    }
-    
-    return mutableCategoriesJSON;
+    [mutableCategoriesJSON appendString: categories[@"title"]];
+  }
+  
+  return mutableCategoriesJSON;
 }
 
 @end
