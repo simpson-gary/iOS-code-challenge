@@ -33,7 +33,7 @@ NSString *const cell = @"cell";
 
 - (CGFloat)estimatedCellHeightForObjectForTableView:(UITableView *)tableView
 {
-    return 55.0f;
+  return 72.0f;//55.0f;
 }
 
 @end

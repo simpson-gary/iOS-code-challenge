@@ -26,16 +26,16 @@
           // WARNING: is the cell still using the same data by this point??
 
           NSLog(@"setting image");
-          self.imageView.image = [UIImage imageWithData: data];
-        self.setNeedsLayout;
+          self.businessImage.image = [UIImage imageWithData: data];
+        //self.setNeedsLayout;
       });
   });
   
   
   // Business Name
-    self.textLabel.text = business.name;
-    NSLog(@"Distance is %@", business.distance);
-  self.detailTextLabel.text = [NSString stringWithFormat:@"%@ ~ rating=%@", business.distance, business.rating];
+    self.business = business;
+//    NSLog(@"Distance is %@", business.distance);
+//  self.detailTextLabel.text = [NSString stringWithFormat:@"%@ ~ rating=%@", business.distance, business.rating];
   //self.accessoryType = UITableViewCellAccessoryDetailButton;
 }
 

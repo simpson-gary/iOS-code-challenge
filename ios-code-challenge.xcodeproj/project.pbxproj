@@ -13,6 +13,7 @@
 		8DC8B22C22A186E000CA0435 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC8B22B22A186E000CA0435 /* MasterViewController.swift */; };
 		8E417FCCC130B86138A40577 /* libPods-ios-code-challengeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 275806907CEFEB997DE97372 /* libPods-ios-code-challengeTests.a */; };
 		BD91EC04245C902500E3325D /* NXTBusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91EC03245C902500E3325D /* NXTBusinessTableViewCell.swift */; };
+		BD91EC06245DFD1000E3325D /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */; };
 		C5CEF1832013F25A009D1571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1822013F25A009D1571 /* AppDelegate.m */; };
 		C5CEF18C2013F25A009D1571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5CEF18A2013F25A009D1571 /* Main.storyboard */; };
 		C5CEF18E2013F25A009D1571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5CEF18D2013F25A009D1571 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		989B77EBA51CB77E150DA9A8 /* Pods-ios-code-challengeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-code-challengeUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-code-challengeUITests/Pods-ios-code-challengeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B064CEA7FA6518CF6FC25953 /* Pods-ios-code-challenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-code-challenge.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-code-challenge/Pods-ios-code-challenge.release.xcconfig"; sourceTree = "<group>"; };
 		BD91EC03245C902500E3325D /* NXTBusinessTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NXTBusinessTableViewCell.swift; sourceTree = "<group>"; };
+		BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		C5CEF17E2013F25A009D1571 /* ios-code-challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-code-challenge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CEF1812013F25A009D1571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C5CEF1822013F25A009D1571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			children = (
 				C5CEF1B72014411C009D1571 /* NXTDataSource.h */,
 				C5CEF1B82014411C009D1571 /* NXTDataSource.m */,
+				BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5CEF1832013F25A009D1571 /* AppDelegate.m in Sources */,
+				BD91EC06245DFD1000E3325D /* UIViewExtensions.swift in Sources */,
 				BD91EC04245C902500E3325D /* NXTBusinessTableViewCell.swift in Sources */,
 				C5CEF1D92015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m in Sources */,
 				C5CEF1942013F25A009D1571 /* main.m in Sources */,
