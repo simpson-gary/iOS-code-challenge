@@ -134,6 +134,7 @@ class DetailViewController: BaseScrollableViewController {
     businessRatingCount.text = "\(business?.price ?? "-") ∙ ★\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
     businessDistanceLabel.text = "\(business?.distance ?? 0)* "
     businessCaptionLabel.text = business?.categories
+
     
     navigationItem.title = business?.name
     mapView.isHidden = false

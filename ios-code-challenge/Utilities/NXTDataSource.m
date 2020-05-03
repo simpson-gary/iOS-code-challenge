@@ -9,6 +9,7 @@
 #import "NXTDataSource.h"
 #import "NXTCellForObjectDelegate.h"
 #import "NXTBindingDataForObjectDelegate.h"
+#import "YLPBusiness.h"
 #import <ios_code_challenge-Swift.h>
 
 @interface NXTDataSource()
@@ -107,7 +108,14 @@
 
 - (void)setObjects:(NSArray *)objects
 {
-  [self.mutableObjects setArray:objects];
+  NSArray *sortedArray;
+  sortedArray = [objects sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+      NSNumber *first = [(YLPBusiness*)a distance];
+      NSNumber *second = [(YLPBusiness*)b distance];
+      return [first compare:second];
+  }];
+  
+  [self.mutableObjects setArray:sortedArray];
 }
 
 - (void)appendObjects:(NSArray *)objects
