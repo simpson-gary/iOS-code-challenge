@@ -9,10 +9,20 @@
 import UIKit
 import MapKit
 
-class MasterViewController: UITableViewController{
+class MasterViewController: UITableViewController, UISearchBarDelegate {
   
   @objc var detailViewController: DetailViewController?
   let locationManager = CLLocationManager()//Use for GPS permissions
+  
+  var searchActive: Bool = false
+  var timer: Timer?
+  
+  lazy var searchBar: UISearchBar! = {
+    let bar = UISearchBar(frame: .zero)
+    bar.placeholder = "Search"
+    bar.translatesAutoresizingMaskIntoConstraints = false
+    return bar
+  }()
   
   lazy private var dataSource: NXTDataSource? = {
     guard let dataSource = NXTDataSource(objects: nil) else { return nil }
@@ -31,19 +41,26 @@ class MasterViewController: UITableViewController{
     tableView.delegate = dataSource
     tableView.allowsSelection = true
     
+    searchBar.delegate = self
+    self.navigationItem.titleView = searchBar
+    
     ///Enable GPS usage
     locationManager.delegate = self
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
     locationManager.requestWhenInUseAuthorization()
     locationManager.requestLocation()
-    
-//    let query = YLPSearchQuery(location: "5550 West Executive Dr. Tampa, FL 33609")
-
+      
+    setLayout()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     self.clearsSelectionOnViewWillAppear = self.splitViewController?.isCollapsed ?? false
     super.viewDidAppear(animated)
+  }
+  
+  
+  func setLayout() {
+      
   }
   
   // MARK: - Navigation
@@ -89,8 +106,8 @@ class MasterViewController: UITableViewController{
     transitionDetailView(indexPath: indexPath)
   }
   
-  //MARK: - Search
-  func executeSEarch(query: YLPSearchQuery) {
+  //MARK: - SearchQuery
+  func executeSearch(query: YLPSearchQuery) {
     AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
       guard let strongSelf = self,
         let dataSource = strongSelf.dataSource,
@@ -103,6 +120,60 @@ class MasterViewController: UITableViewController{
     })
   }
   
+  //MARK: - SearchBar
+   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+     debugPrint("MasterView:: searchBarTextDidBeginEditing #\(searchBar.text ?? "").")
+    
+     if searchBar.text!.count < 0 {
+       searchActive = true;
+     }
+   }
+  
+  func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    debugPrint("MasterView:: searchBarTextDidEndEditing #\(searchBar.text ?? "").")
+    searchActive = false;
+    
+    guard let searchBarText = searchBar.text else { return }
+    let query = YLPSearchQuery(location: searchBarText)
+   }
+  
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    debugPrint("MasterView:: searchBarSearchButtonClicked #\(searchBar.text ?? "").")
+    
+    if (searchActive) {
+      executeTextSearch()
+    }
+    
+    searchBar.resignFirstResponder()
+  }
+  
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    debugPrint("MasterView:: searchBarCancelButtonClicked #\(searchBar.text ?? "").")
+      searchActive = false;
+  }
+  
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    debugPrint("MasterView:: textDidChange #\(searchBar.text ?? "").")
+    guard let searchBarText = searchBar.text else { return }
+    
+    searchActive = true
+    if timer != nil && timer!.isValid {
+      debugPrint("MasterView:: timer.invalidate()")
+      timer?.invalidate()
+    }
+    
+    timer = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(executeTextSearch), userInfo: nil, repeats: false)
+    RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
+  }
+  
+  @objc func executeTextSearch() {
+    debugPrint("MasterView:: executeTextSearch #\(searchBar.text ?? "").")
+    guard let searchBarText = searchBar.text else { return }
+    let query = YLPSearchQuery(location: searchBarText)
+    executeSearch(query: query)
+    searchActive = false
+    timer!.invalidate()
+  }
 }
 
 
@@ -119,13 +190,12 @@ extension MasterViewController : CLLocationManagerDelegate {
     
     if let location = locations.first {
       let query = YLPSearchQuery(coordinates: location)
-      self.executeSEarch(query: query)
+      self.executeSearch(query: query)
     }
   }
   
   func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
     print("error:: \(error)")
   }
-  
 }
 

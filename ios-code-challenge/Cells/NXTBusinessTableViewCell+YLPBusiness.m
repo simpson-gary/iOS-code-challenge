@@ -15,11 +15,11 @@
 - (void)configureCell:(YLPBusiness *)business
 {
       
-  NSLog(@"URL is %@", business.imageUrl);
+  //NSLog(@"URL is %@", business.imageUrl);
   dispatch_async(dispatch_get_global_queue(0,0), ^{
       NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: business.imageUrl]];
     if ( data == nil ) {
-      NSLog(@"URL is nil");
+      NSLog(@"ImageURL is nil");
           return;
     }
 
