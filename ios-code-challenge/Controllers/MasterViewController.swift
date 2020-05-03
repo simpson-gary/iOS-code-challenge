@@ -10,7 +10,7 @@ import UIKit
 
 class MasterViewController: UITableViewController{
     
-    var detailViewController: DetailViewController?
+    @objc var detailViewController: DetailViewController?
     
     lazy private var dataSource: NXTDataSource? = {
         guard let dataSource = NXTDataSource(objects: nil) else { return nil }

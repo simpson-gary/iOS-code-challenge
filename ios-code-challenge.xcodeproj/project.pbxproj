@@ -14,6 +14,7 @@
 		8E417FCCC130B86138A40577 /* libPods-ios-code-challengeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 275806907CEFEB997DE97372 /* libPods-ios-code-challengeTests.a */; };
 		BD91EC04245C902500E3325D /* NXTBusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91EC03245C902500E3325D /* NXTBusinessTableViewCell.swift */; };
 		BD91EC06245DFD1000E3325D /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */; };
+		BDE0C14C245F0F3B0021D34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE0C14B245F0F3B0021D34E /* AppDelegate.swift */; };
 		C5CEF1832013F25A009D1571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1822013F25A009D1571 /* AppDelegate.m */; };
 		C5CEF18C2013F25A009D1571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5CEF18A2013F25A009D1571 /* Main.storyboard */; };
 		C5CEF18E2013F25A009D1571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5CEF18D2013F25A009D1571 /* Assets.xcassets */; };
@@ -62,6 +63,7 @@
 		B064CEA7FA6518CF6FC25953 /* Pods-ios-code-challenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-code-challenge.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-code-challenge/Pods-ios-code-challenge.release.xcconfig"; sourceTree = "<group>"; };
 		BD91EC03245C902500E3325D /* NXTBusinessTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NXTBusinessTableViewCell.swift; sourceTree = "<group>"; };
 		BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		BDE0C14B245F0F3B0021D34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5CEF17E2013F25A009D1571 /* ios-code-challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-code-challenge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5CEF1812013F25A009D1571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C5CEF1822013F25A009D1571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				C5CEF1BD20144327009D1571 /* Controllers */,
 				C5CEF1BA20144217009D1571 /* Protocols */,
 				C5CEF1B6201440A5009D1571 /* Utilities */,
+				BDE0C14B245F0F3B0021D34E /* AppDelegate.swift */,
 				C5CEF1812013F25A009D1571 /* AppDelegate.h */,
 				C5CEF1822013F25A009D1571 /* AppDelegate.m */,
 				C5CEF18A2013F25A009D1571 /* Main.storyboard */,
@@ -476,6 +479,7 @@
 				C5CEF1CD2014DC36009D1571 /* YLPSearch.m in Sources */,
 				C5CEF1B92014411C009D1571 /* NXTDataSource.m in Sources */,
 				8DC8B22C22A186E000CA0435 /* MasterViewController.swift in Sources */,
+				BDE0C14C245F0F3B0021D34E /* AppDelegate.swift in Sources */,
 				C5CEF1D02014E1FD009D1571 /* YLPBusiness.m in Sources */,
 				C5CEF1D52015350A009D1571 /* NXTBusinessTableViewCell.m in Sources */,
 				8DC8B21A22A1764500CA0435 /* DetailViewController.swift in Sources */,
