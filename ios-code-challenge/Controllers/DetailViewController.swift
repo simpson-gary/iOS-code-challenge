@@ -9,29 +9,10 @@
 import UIKit
 import MapKit
 
-/*
- 2. When you tap on a business cell, show the details of the business on the right side.  Include the following fields
- a. Name
- b. Categories
- c. Rating
- d. Review Count
- e. Price
- f. Thumbnail
- */
-
-class DetailViewController: UIViewController {
+class DetailViewController: BaseScrollableViewController {
   
   var initialLocation: CLLocation?
   let regionRadius: CLLocationDistance = 1000
-  
-  ////  @objc func setBusiness(biz: YLPBusiness) {
-  ////    business = biz
-  ////  }
-  //
-  //  @objc var business: YLPBusiness? {
-  //    set { self.business = newValue }
-  //    get { return self.business }
-  //  }
   
   @objc var business: YLPBusiness? {
     didSet {
@@ -41,20 +22,50 @@ class DetailViewController: UIViewController {
     }
   }
   
+  lazy private var divider: UIView = {
+      let view = UIView.init(frame: .zero)
+      view.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+      view.translatesAutoresizingMaskIntoConstraints = false
+      view.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
+    view.widthAnchor.constraint(equalToConstant: view.frame.height * 0.7).isActive = true
+      return view
+  }()
+  
   var imageView: UIImageView? = {
     let imgView = UIImageView()
     imgView.contentMode = .scaleAspectFill
     imgView.clipsToBounds = true
-    imgView.backgroundColor = UIColor.red//UIColor.gray.withAlphaComponent(0.5)
-    imgView.layer.cornerRadius = CGFloat(4.0)
     imgView.translatesAutoresizingMaskIntoConstraints = false
     return imgView
   }()
   
+  lazy private var mapView: MKMapView = {
+     let view = MKMapView.init(frame: .zero)
+     view.isHidden = true
+     view.translatesAutoresizingMaskIntoConstraints = false
+     return view
+   }()
+
   private let businessNameLabel : UILabel = {
     let lbl = UILabel()
     lbl.font = UIFont.preferredFont(forTextStyle: .headline)
     lbl.textAlignment = .left
+    return lbl
+  }()
+  
+  private let businessRatingCount : UILabel = {
+    let label = UILabel()
+    label.font = UIFont.boldSystemFont(ofSize: 16)
+    label.textAlignment = .left
+    label.text = "0"
+    return label
+  }()
+  
+  private let businessDistanceLabel : UILabel = {
+    let lbl = UILabel()
+    lbl.font = UIFont.preferredFont(forTextStyle: .body)
+    lbl.textAlignment = .left
+    lbl.numberOfLines = 0
     return lbl
   }()
   
@@ -73,11 +84,6 @@ class DetailViewController: UIViewController {
     return lbl
   }()
   
-  let businessDetailsStack: BaseBackgroundStackView = {
-    let stack = BaseBackgroundStackView.init(frame: .zero)
-    return stack
-  }()
-  
   
   @IBOutlet var detailDescriptionLabel: UILabel!
   lazy private var favoriteBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "Star-Outline"), style: .plain, target: self, action: #selector(onFavoriteBarButtonSelected(_:)))
@@ -91,10 +97,17 @@ class DetailViewController: UIViewController {
     }
   }
   
+  lazy var businessDetailsStack: BaseBackgroundStackView = {
+    let stack = BaseBackgroundStackView.init(arrangedSubviews: [divider, businessRatingCount, divider, businessDistanceLabel, divider, businessCaptionLabel])
+    return stack
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    view.addSubview(imageView!)
+    scrollContentView.addSubview(imageView!)
+    scrollContentView.addSubview(mapView)
+    scrollContentView.addSubview(businessDetailsStack)
     
     //        configureView()
     navigationItem.rightBarButtonItems = [favoriteBarButtonItem]
@@ -102,9 +115,13 @@ class DetailViewController: UIViewController {
   }
   
   func setLayout() {
-    imageView!.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor)
-    imageView!.heightAnchor.constraint(equalToConstant: view.frame.height / 3).isActive = true
+    imageView!.anchor(top: scrollContentView.topAnchor, leading: scrollContentView.leadingAnchor, bottom: nil, trailing: scrollContentView.trailingAnchor, padding: UIEdgeInsets.zero)
+    imageView!.heightAnchor.constraint(equalToConstant: view.frame.height / 2).isActive = true
       
+    mapView.anchor(top: imageView?.bottomAnchor, leading: scrollContentView.leadingAnchor, bottom: nil, trailing: scrollContentView.trailingAnchor)
+    mapView.heightAnchor.constraint(equalToConstant: view.frame.height / 4).isActive = true
+    
+    businessDetailsStack.anchor(top: mapView.bottomAnchor, leading: scrollContentView.leadingAnchor, bottom: nil, trailing: scrollContentView.trailingAnchor)
   }
   
   
@@ -112,16 +129,21 @@ class DetailViewController: UIViewController {
     //guard let detailItem = detailItem else { return }
     detailDescriptionLabel = UILabel.init()
     detailDescriptionLabel.text = business?.name ?? "No Name Set"
-    //navigationController?.title = business?.name
-    navigationItem.title = business?.name
     
+    businessNameLabel.text = business?.name
+    businessRatingCount.text = "\(business?.price ?? "-") ∙ ★\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
+    businessDistanceLabel.text = "\(business?.distance ?? 0)* "
+    businessCaptionLabel.text = business?.categories
+    
+    navigationItem.title = business?.name
+    mapView.isHidden = false
   }
   
-  func setDetailItem(newDetailItem: YLPBusiness) {
-    //guard detailItem != newDetailItem else { return }
-    //detailItem = newDetailItem
-    //configureView()
-  }
+//  func setDetailItem(newDetailItem: YLPBusiness) {
+//    //guard detailItem != newDetailItem else { return }
+//    //detailItem = newDetailItem
+//    //configureView()
+//  }
   
   private func updateFavoriteBarButtonState() {
     favoriteBarButtonItem.image = isFavorite ? UIImage(named: "Star-Filled") : UIImage(named: "Star-Outline")
@@ -130,75 +152,5 @@ class DetailViewController: UIViewController {
   @objc private func onFavoriteBarButtonSelected(_ sender: Any) {
     _favorite.toggle()
     updateFavoriteBarButtonState()
-  }
-}
-
-
-/**
- Provides a base UIStackView with rounded corners & UIView with background blurr effect applied.
- 
- - Important:
- Defaults isHidden = true.
- */
-class BaseBackgroundStackView: UIStackView {
-  let margin: CGFloat = 8
-  
-  var backgroundView: UIView = {
-    let view = UIView()
-    //view.backgroundColor = UIColor.systemGray6.withAlphaComponent(0.5)
-    view.layer.cornerRadius = 8.0
-    view.layer.borderWidth = 2.0
-    if #available(iOS 13.0, *) {
-      view.layer.borderColor = UIColor.systemFill.cgColor
-    } else {
-      // Fallback on earlier versions
-      view.layer.borderColor = UIColor.lightGray.cgColor
-    }
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-  
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    translatesAutoresizingMaskIntoConstraints = false
-    
-    spacing = 4.0
-    layoutMargins = UIEdgeInsets.init(top: margin, left: margin, bottom: margin, right: margin)
-    
-    //clipsToBounds = true
-    isLayoutMarginsRelativeArrangement = true
-    alignment = .leading
-    distribution = UIStackView.Distribution.fill
-    axis = .vertical
-    
-    isHidden = true
-    setupBackgroundView()
-    setupBlurEffect()
-  }
-  
-  required init(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  func setupBlurEffect() {
-    var blurEffect: UIBlurEffect
-    
-    if #available(iOS 13.0, *) {
-      blurEffect = UIBlurEffect(style: .systemThickMaterial)
-    } else {
-      blurEffect = UIBlurEffect(style: .dark)
-    }
-    
-    let visualEffectView = UIVisualEffectView(effect: blurEffect)
-    
-    backgroundView.addSubview(visualEffectView)
-    visualEffectView.anchorToFillSuperView()
-    visualEffectView.alpha = 0.75
-  }
-  
-  func setupBackgroundView() {
-    insertSubview(backgroundView, at: 0)
-    backgroundView.anchorToFillSuperView()
-    backgroundView.clipsToBounds = true
   }
 }
