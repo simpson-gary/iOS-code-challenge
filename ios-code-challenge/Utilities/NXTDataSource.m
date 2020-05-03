@@ -75,45 +75,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSLog(@"tableView::  didSelectRowAtIndexPath");
-//  id object = self.mutableObjects[indexPath.row];
-//  //if(self.tableViewDidSelectCell) {
-//    //self.tableViewDidSelectCell(object);
-//  UISplitViewController *splitViewController = _masterView.splitViewController;
-//    DetailViewController *toViewController = _masterView.splitViewController.viewControllers[1];
     NXTBusinessTableViewCell *cell = [tableView cellForRowAtIndexPath: indexPath];
   //NSLog(@"business is %@", cell.business);
-  
-//  YLPBusiness *business = cell.business;
-  
-//  //Build a segue string based on the selected cell
-//  NSString *segueString = [NSString stringWithFormat:@"%@showDetail",
-//                          [contentArray objectAtIndex:indexPath.row]];
   _masterView.detailViewController.business = cell.business;
-  //Perform a segue.
-  //[_masterView performSegueWithIdentifier:@"showDetail" sender:nil];
-  //[toViewController setBusiness: business];
-
-  //toViewController.business = cell.business;
-
-//  if (splitViewController.isCollapsed == false ) {
-//    UINavigationController *navController = toViewController.navigationController;
-//    [splitViewController showDetailViewController: navController sender: self];
-//  }
-  
-//  _masterView.splitViewController.storyboard.segu
-//    UIStoryboardSegue *segue = [[UIStoryboardSegue alloc] initWithIdentifier:@"showDetail" source:_masterView destination: toViewController];
-//    [_masterView prepareForSegue:segue sender:_masterView];
-//    [segue perform];
-  //[_masterView performSegueWithIdentifier:@"showDetail" sender:self];
-  //[_masterView.splitViewController showDetailViewController:_masterView.detailViewController sender: self];
   
   [_masterView transitionDetailViewWithIndexPath:indexPath];
-  
-  //[segue perform];
-//  [_masterView.navigationController pushViewController: toViewController animated:YES];
-  //}
-  
-  //[tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath

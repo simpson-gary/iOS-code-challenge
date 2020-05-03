@@ -7,6 +7,7 @@
 //
 
 @import Foundation;
+@import UIKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,6 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
  *  Yelp distance of this business.
  */
 @property (nonatomic, readonly, copy) NSNumber *distance;
+
+/**
+ *  Yelp image of this business.
+ */
+@property (nonatomic, readonly, copy) UIImage *image;
 
 /**
  *  Yelp id of this business.

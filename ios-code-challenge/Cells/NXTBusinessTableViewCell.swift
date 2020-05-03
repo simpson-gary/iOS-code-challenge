@@ -8,14 +8,15 @@
 
 import UIKit
 
-@objcMembers class NXTBusinessTableViewCell: UITableViewCell {
+ class NXTBusinessTableViewCell: UITableViewCell {
   
-  var business: YLPBusiness? {
+ @objc var business: YLPBusiness? {
     didSet {
       businessNameLabel.text = business?.name
       businessRatingCount.text = "★\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
       businessDescriptionLabel.text = "\(business?.distance ?? 0)* "
       businessCaptionLabel.text = business?.categories
+      businessImage.image = business?.image
     }
   }
   
@@ -45,11 +46,11 @@ import UIKit
     let label = UILabel()
     label.font = UIFont.boldSystemFont(ofSize: 16)
     label.textAlignment = .left
-    label.text = "1"
+    label.text = "0"
     return label
   }()
   
-  let businessImage : UIImageView = {
+  @objc let businessImage : UIImageView = {
     let imgView = UIImageView()
     imgView.contentMode = .scaleAspectFill
     imgView.clipsToBounds = true
