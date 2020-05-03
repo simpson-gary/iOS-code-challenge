@@ -41,17 +41,6 @@ import UIKit
     return lbl
   }()
   
-  private let decreaseButton : UIButton = {
-    let btn = UIButton(type: .custom)
-    btn.backgroundColor = .blue
-    return btn
-  }()
-  
-  private let increaseButton : UIButton = {
-    let btn = UIButton(type: .custom)
-    btn.backgroundColor = .red
-    return btn
-  }()
   var businessRatingCount : UILabel = {
     let label = UILabel()
     label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -69,15 +58,24 @@ import UIKit
     return imgView
   }()
   
+//  
+//  override var isSelected: Bool {
+//    didSet {
+//      if isSelected {
+//        self.backgroundColor = .red//UIColor.systemGray.withAlphaComponent(0.2)
+//      } else {
+//        self.backgroundColor = UIColor.systemGray.withAlphaComponent(0.2)
+//      }
+//    }
+//  }
+  
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     addSubview(businessImage)
     addSubview(businessNameLabel)
     addSubview(businessDescriptionLabel)
     addSubview(businessCaptionLabel)
-    addSubview(decreaseButton)
     addSubview(businessRatingCount)
-    addSubview(increaseButton)
     
     businessImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 80, height: 0, enableInsets: false)
     businessNameLabel.anchor(top: topAnchor, left: businessImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0/*frame.size.width / 2*/, height: 0, enableInsets: false)
@@ -85,7 +83,7 @@ import UIKit
     
     businessCaptionLabel.anchor(top: businessDescriptionLabel.bottomAnchor, left: businessImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0/*frame.size.width / 2*/, height: 0, enableInsets: false)
     
-    let stackView = UIStackView(arrangedSubviews: [businessRatingCount])// [decreaseButton,businessRatingCount,increaseButton])
+    let stackView = UIStackView(arrangedSubviews: [businessRatingCount])
     stackView.distribution = .equalSpacing
     stackView.axis = .horizontal
     stackView.spacing = 5
