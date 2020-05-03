@@ -7,11 +7,13 @@
 //
 
 @import Foundation;
+@import MapKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YLPSearchQuery : NSObject
 
+- (instancetype)initWithCoordinates:(CLLocation *)coordinates;
 - (instancetype)initWithLocation:(NSString *)location;
 - (NSDictionary *)parameters;
 

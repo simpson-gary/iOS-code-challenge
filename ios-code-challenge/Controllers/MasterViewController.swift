@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import MapKit
 
 class MasterViewController: UITableViewController{
   
   @objc var detailViewController: DetailViewController?
+  let locationManager = CLLocationManager()//Use for GPS permissions
   
   lazy private var dataSource: NXTDataSource? = {
     guard let dataSource = NXTDataSource(objects: nil) else { return nil }
@@ -29,17 +31,14 @@ class MasterViewController: UITableViewController{
     tableView.delegate = dataSource
     tableView.allowsSelection = true
     
-    let query = YLPSearchQuery(location: "5550 West Executive Dr. Tampa, FL 33609")
-    AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
-      guard let strongSelf = self,
-        let dataSource = strongSelf.dataSource,
-        let businesses = searchResult?.businesses else {
-          return
-      }
-      dataSource.setObjects(businesses)
-      dataSource.setDetailView(self)
-      strongSelf.tableView.reloadData()
-    })
+    ///Enable GPS usage
+    locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest
+    locationManager.requestWhenInUseAuthorization()
+    locationManager.requestLocation()
+    
+//    let query = YLPSearchQuery(location: "5550 West Executive Dr. Tampa, FL 33609")
+
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -90,4 +89,43 @@ class MasterViewController: UITableViewController{
     transitionDetailView(indexPath: indexPath)
   }
   
+  //MARK: - Search
+  func executeSEarch(query: YLPSearchQuery) {
+    AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
+      guard let strongSelf = self,
+        let dataSource = strongSelf.dataSource,
+        let businesses = searchResult?.businesses else {
+          return
+      }
+      dataSource.setObjects(businesses)
+      dataSource.setDetailView(self)
+      strongSelf.tableView.reloadData()
+    })
+  }
+  
 }
+
+
+//MARK: - Location Extensions
+///Used for locations permission.
+extension MasterViewController : CLLocationManagerDelegate {
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    if status == .authorizedWhenInUse {
+          locationManager.requestLocation()
+    }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    
+    if let location = locations.first {
+      let query = YLPSearchQuery(coordinates: location)
+      self.executeSEarch(query: query)
+    }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    print("error:: \(error)")
+  }
+  
+}
+
