@@ -2,7 +2,7 @@
 //  BusinessTableViewCell.swift
 //  ios-code-challenge
 //
-//  Created by Jinglz on 5/1/20.
+//  Created by Gary Simpson on 5/1/20.
 //  Copyright © 2020 Dustin Lange. All rights reserved.
 //
 
@@ -14,7 +14,7 @@ import UIKit
     didSet {
       businessNameLabel.text = business?.name
       businessRatingCount.text = "★\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
-      businessDescriptionLabel.text = "\(business?.distance ?? 0)* "
+      businessDescriptionLabel.text = "\(business?.distance.getMiles() ?? "0m")* "
       businessCaptionLabel.text = business?.categories
       businessImage.image = business?.image
     }
@@ -98,5 +98,4 @@ import UIKit
   
   
 }
-
 

@@ -19,11 +19,12 @@
 		BD91EC04245C902500E3325D /* NXTBusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91EC03245C902500E3325D /* NXTBusinessTableViewCell.swift */; };
 		BD91EC06245DFD1000E3325D /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */; };
 		BD9BC85F246003540089D06E /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BC85E246003540089D06E /* Strings.swift */; };
+		BD9BC8612460632A0089D06E /* NSNumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BC8602460632A0089D06E /* NSNumberExtensions.swift */; };
+		BD9BC863246064160089D06E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD9BC862246064140089D06E /* Main.storyboard */; };
+		BD9BC865246065C50089D06E /* YLPBusinessDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BC864246065C50089D06E /* YLPBusinessDetails.swift */; };
 		BDE0C14C245F0F3B0021D34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE0C14B245F0F3B0021D34E /* AppDelegate.swift */; };
 		BDE0C14E245F48330021D34E /* BaseScrollableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE0C14D245F48330021D34E /* BaseScrollableViewController.swift */; };
 		BDE0C150245F504D0021D34E /* BaseBackgroundStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE0C14F245F504D0021D34E /* BaseBackgroundStackView.swift */; };
-		C5CEF1832013F25A009D1571 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1822013F25A009D1571 /* AppDelegate.m */; };
-		C5CEF18C2013F25A009D1571 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5CEF18A2013F25A009D1571 /* Main.storyboard */; };
 		C5CEF18E2013F25A009D1571 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5CEF18D2013F25A009D1571 /* Assets.xcassets */; };
 		C5CEF1912013F25A009D1571 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5CEF18F2013F25A009D1571 /* LaunchScreen.storyboard */; };
 		C5CEF1942013F25A009D1571 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1932013F25A009D1571 /* main.m */; };
@@ -75,13 +76,13 @@
 		BD91EC03245C902500E3325D /* NXTBusinessTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NXTBusinessTableViewCell.swift; sourceTree = "<group>"; };
 		BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		BD9BC85E246003540089D06E /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		BD9BC8602460632A0089D06E /* NSNumberExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtensions.swift; sourceTree = "<group>"; };
+		BD9BC862246064140089D06E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		BD9BC864246065C50089D06E /* YLPBusinessDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YLPBusinessDetails.swift; sourceTree = "<group>"; };
 		BDE0C14B245F0F3B0021D34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDE0C14D245F48330021D34E /* BaseScrollableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollableViewController.swift; sourceTree = "<group>"; };
 		BDE0C14F245F504D0021D34E /* BaseBackgroundStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseBackgroundStackView.swift; sourceTree = "<group>"; };
 		C5CEF17E2013F25A009D1571 /* ios-code-challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-code-challenge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5CEF1812013F25A009D1571 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		C5CEF1822013F25A009D1571 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C5CEF18B2013F25A009D1571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C5CEF18D2013F25A009D1571 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C5CEF1902013F25A009D1571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C5CEF1922013F25A009D1571 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -201,11 +202,9 @@
 				C5CEF1BA20144217009D1571 /* Protocols */,
 				C5CEF1B6201440A5009D1571 /* Utilities */,
 				BDE0C14B245F0F3B0021D34E /* AppDelegate.swift */,
-				C5CEF1812013F25A009D1571 /* AppDelegate.h */,
-				C5CEF1822013F25A009D1571 /* AppDelegate.m */,
-				C5CEF18A2013F25A009D1571 /* Main.storyboard */,
 				C5CEF18D2013F25A009D1571 /* Assets.xcassets */,
 				C5CEF18F2013F25A009D1571 /* LaunchScreen.storyboard */,
+				BD9BC862246064140089D06E /* Main.storyboard */,
 				C5CEF1922013F25A009D1571 /* Info.plist */,
 				C5CEF1932013F25A009D1571 /* main.m */,
 			);
@@ -237,6 +236,7 @@
 				C5CEF1B82014411C009D1571 /* NXTDataSource.m */,
 				BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */,
 				BD9BC85E246003540089D06E /* Strings.swift */,
+				BD9BC8602460632A0089D06E /* NSNumberExtensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -280,6 +280,7 @@
 				C5CEF1CF2014E1FD009D1571 /* YLPBusiness.m */,
 				C5CEF1DA20153618009D1571 /* YLPBusiness+CellForObject.h */,
 				C5CEF1DB20153618009D1571 /* YLPBusiness+CellForObject.m */,
+				BD9BC864246065C50089D06E /* YLPBusinessDetails.swift */,
 			);
 			path = YelpAPI;
 			sourceTree = "<group>";
@@ -410,7 +411,7 @@
 				C5CEF1912013F25A009D1571 /* LaunchScreen.storyboard in Resources */,
 				C5CEF18E2013F25A009D1571 /* Assets.xcassets in Resources */,
 				C5CEF1D62015350A009D1571 /* NXTBusinessTableViewCell.xib in Resources */,
-				C5CEF18C2013F25A009D1571 /* Main.storyboard in Resources */,
+				BD9BC863246064160089D06E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,11 +493,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5CEF1832013F25A009D1571 /* AppDelegate.m in Sources */,
 				BD91EC06245DFD1000E3325D /* UIViewExtensions.swift in Sources */,
 				BD91EC04245C902500E3325D /* NXTBusinessTableViewCell.swift in Sources */,
+				BD9BC865246065C50089D06E /* YLPBusinessDetails.swift in Sources */,
 				C5CEF1D92015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m in Sources */,
 				C5CEF1942013F25A009D1571 /* main.m in Sources */,
+				BD9BC8612460632A0089D06E /* NSNumberExtensions.swift in Sources */,
 				BD205BB4245FAB03001D7F0B /* NavigationUtility.swift in Sources */,
 				C5CEF1CD2014DC36009D1571 /* YLPSearch.m in Sources */,
 				BDE0C150245F504D0021D34E /* BaseBackgroundStackView.swift in Sources */,
@@ -550,14 +552,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		C5CEF18A2013F25A009D1571 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C5CEF18B2013F25A009D1571 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		C5CEF18F2013F25A009D1571 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

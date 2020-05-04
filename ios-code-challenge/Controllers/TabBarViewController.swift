@@ -12,10 +12,9 @@ class TabBarViewController: UITabBarController {
   var detailViewController = DetailViewController()
   let firstViewController = MasterViewController()
   let secondViewController = FavoritesViewController()
-    
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     
     firstViewController.detailViewController = detailViewController
     firstViewController.tabViewController = self
@@ -43,34 +42,24 @@ class TabBarViewController: UITabBarController {
     default:
       debugPrint("TabBarViewController:: ERROR! #\(self.selectedIndex) Unaccounted for in switch.")
     }
-//    debugPrint("TabBarViewController:: executePageQuery: selected = #\(self.selectedIndex) tapped.")
-//    perform(pageAction?[self.selectedIndex])
-//    guard let action = pageAction?[self.selectedIndex] else {
-//      return
-//    }
-//     debugPrint("TabBarViewController:: executePageQuery: performing action.")
-//    perform(action)
   }
   
-   // MARK: - Navigation
-   
+  // MARK: - Navigation
   @objc func transitionDetailView(cell: NXTBusinessTableViewCell) {
-
+    
     debugPrint("TabBarViewController:: transitionDetailView: business = #\(cell.business?.name ?? "") tapped.")
     
-     detailViewController.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-     detailViewController.navigationItem.leftItemsSupplementBackButton = true
-
+    detailViewController.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+    detailViewController.navigationItem.leftItemsSupplementBackButton = true
+    
     detailViewController.business = cell.business
-     let image = cell.businessImage.image?.cgImage?.copy()
-     detailViewController.imageView!.image = UIImage.init(cgImage: image!)
-
-     //Show detailView for portriat iPhone
-     if splitViewController?.isCollapsed ?? false {
-       let detailNavController = detailViewController.navigationController
+    let image = cell.businessImage.image?.cgImage?.copy()
+    detailViewController.imageView!.image = UIImage.init(cgImage: image!)
+    
+    //Show detailView for portriat iPhone
+    if splitViewController?.isCollapsed ?? false {
+      let detailNavController = detailViewController.navigationController
       splitViewController?.showDetailViewController(detailNavController!, sender: self)
-     }
-   }
-   
-  
+    }
+  }
 }

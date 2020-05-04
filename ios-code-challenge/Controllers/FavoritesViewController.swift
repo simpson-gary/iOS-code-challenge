@@ -11,37 +11,39 @@ import UIKit
 class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableViewCell> {
   static let favoritesKey = "iosCodeChallenge.favorites"
   static var favoritesList = [String]()
-  var businessDetails: [YLPBusinessDetails]? {
-    didSet {
-      debugPrint("FavoritesView:: businessDetails: didSet.")
-      if businessDetails?.count ?? 0 > 0 && businessDetails?.count == FavoritesViewController.favoritesList.count {
-        var businessList = [YLPBusiness]()
-        businessDetails!.forEach { detail in
-          //let detail = businessDetails.last
-            
-          let biz = YLPBusiness.init(variables: detail.name! ,
-                                     detail.image_url! ?? "",
-                                     detail.price ?? "",
-                                     detail.rating! as! NSNumber,
-                                     detail.id ?? "",
-                                     detail.review_count as! NSNumber)
-          
-            debugPrint("FavoritesView:: setDetails: \(detail.name ?? "").")
-            businessList.append(biz)
-        }
-        updateDataSource(businessList)
-      }
-    }
-  }
-  
-//  lazy private var dataSource: NXTDataSource? = {
-//    guard let dataSource = NXTDataSource(objects: nil) else { return nil }
-//    dataSource.tableViewDidReceiveData = { [weak self] in
-//      guard let strongSelf = self else { return }
-//      strongSelf.tableView.reloadData()
+//  var businessDetails: [YLPBusinessDetails]? {
+//    didSet {
+//      debugPrint("FavoritesView:: businessDetails: didSet.")
+//      if  businessDetails?.count ?? 0 != 0 && businessDetails?.count == FavoritesViewController.favoritesList.count {
+//        var businessList = [YLPBusiness]()
+//        businessDetails!.forEach { detail in
+//          //let detail = businessDetails.last
+//
+//          let biz = YLPBusiness.init(variables: detail.name? ?? "",
+//                                     detail.image_url! ?? "",
+//                                     detail.price ?? "",
+//                                     detail.rating! as! NSNumber,
+//                                     detail.id ?? "",
+//                                     detail.review_count as! NSNumber)
+//
+//          debugPrint("FavoritesView:: setDetails: \(detail.name ?? "").")
+//          businessList.append(biz)
+//        }
+//        DispatchQueue.main.async {
+//          self.updateDataSource(businessList)
+//        }
+//      }
 //    }
-//    return dataSource
-//  }()
+//  }
+  
+  //  lazy private var dataSource: NXTDataSource? = {
+  //    guard let dataSource = NXTDataSource(objects: nil) else { return nil }
+  //    dataSource.tableViewDidReceiveData = { [weak self] in
+  //      guard let strongSelf = self else { return }
+  //      strongSelf.tableView.reloadData()
+  //    }
+  //    return dataSource
+  //  }()
   
   private let titleLabel : UILabel = {
     let lbl = UILabel()
@@ -54,18 +56,19 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
   override func viewDidLoad() {
     super.viewDidLoad()
     
-//    tableView.dataSource = dataSource
-//    tableView.delegate = dataSource
-//    tableView.allowsSelection = true
-    businessDetails = [YLPBusinessDetails]()
+    //    tableView.dataSource = dataSource
+    //    tableView.delegate = dataSource
+    //    tableView.allowsSelection = true
+    //businessDetails = [YLPBusinessDetails]()
+    updateDataSource(Favorites.global.compactMap({$0.business}))
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
     self.tabBarController?.navigationItem.titleView = titleLabel
-    FavoritesViewController.favoritesList = FavoritesViewController.loadFavoritesList()
-    queryForFavorites()
+    //FavoritesViewController.favoritesList = FavoritesViewController.loadFavoritesList()
+    //queryForFavorites()
   }
   
   
@@ -74,7 +77,7 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
     FavoritesViewController.favoritesList.forEach { fav in
       //let query = YLPSearchQuery(location: fav)
       //query.limit = 5
-    
+      
       //executeSearch(query: query)
       
       fetchYelpBusinesses()
@@ -82,9 +85,6 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
   }
   
   fileprivate func fetchYelpBusinesses() {
-
-    var tempBusinessDetailsList = [YLPBusinessDetails]()
-    
     FavoritesViewController.favoritesList.forEach{ id in
       print("FavoritesView:: fetching details for ID=\(id)")
       
@@ -92,39 +92,26 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
       var request = URLRequest(url: url!)
       request.setValue("Bearer \(Strings.apiKey)", forHTTPHeaderField: "Authorization")
       request.httpMethod = "GET"
-
+      
       URLSession.shared.dataTask(with: request) { (data, response, error) in
-          guard error == nil else {
-            debugPrint(error!)
-            return
-          }
-       
-       guard let data = data else { return }
-       
-          do {
-           let details = try JSONDecoder().decode(YLPBusinessDetails.self, from: data)
-           
-           debugPrint("FavoritesView:: fetchYelpBusinesses: \(details.name ?? "").")
-            self.businessDetails?.append(details)
-          } catch let jsonError {
-            debugPrint(jsonError)
-          }
-          }.resume()
+        guard error == nil else {
+          debugPrint(error!)
+          return
+        }
+        
+        guard let data = data else { return }
+        
+        do {
+          let details = try JSONDecoder().decode(YLPBusinessDetails.self, from: data)
+          
+          debugPrint("FavoritesView:: fetchYelpBusinesses: \(details.name ?? "").")
+          //self.businessDetails?.append(details)
+        } catch let jsonError {
+          debugPrint(jsonError)
+        }
+      }.resume()
     }
-    
-    
   }
-  
-  /*
-   // MARK: - Navigation
-   
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destination.
-   // Pass the selected object to the new view controller.
-   }
-   */
-  
   
   //MARK: - Favorites
   static func loadFavoritesList() -> [String] {
@@ -140,69 +127,97 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
   }
 }
 
-struct Location: Decodable {
-  let latitude: Float?
-  let longitude: Float?
+
+
+
+
+class Favorite : NSObject , NSCoding {
+  // MARK: Properties
+  var business: YLPBusiness?
+  
+  // MARK: Archiving Paths
+  static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+  static let ArchiveURL = DocumentsDirectory.appendingPathComponent("Favorites")
+  
+  // MARK: Initialization
+  init?(business: YLPBusiness?) {
+    // Initialize stored properties
+    self.business = business
+    
+    // Must call initilizer before returning nil.
+    super.init()
+  }
+  
+  // MARK: Types
+  struct PropertyKey {
+    static let businessKey = "business"
+  }
+  
+  // MARK: NSCoding
+  func encode(with aCoder: NSCoder) {
+    aCoder.encode(business, forKey: PropertyKey.businessKey)
+  }
+  
+  required convenience init?(coder aDecoder: NSCoder) {
+    let business = aDecoder.decodeObject(forKey: PropertyKey.businessKey) as? YLPBusiness
+    
+    // Must call designated initilizer.
+    self.init(business: business)
+  }
+  
 }
 
-struct DailyHours: Decodable {
-  let is_overnight: Bool?
-  let start: String?
-  let end: String?
-  let day: Int?
+
+import Foundation
+//struct to hold VisualizationImages
+struct Favorites {
+    static var global = [Favorite]()
 }
 
+class FavoritesHandler: NSObject {
 
-struct Categories: Decodable {
-  let alias: String?
-  let title: String?
-}
-
-struct Hours: Decodable {
-  let open: [DailyHours]?
-  let hours_type: String?
-  let is_open_now: Bool?
-}
-
-struct YLPBusinessDetails: Decodable {
-  let id: String?
-  let image_url: String?
-  let name: String?
-  let is_closed: Bool?
-  let url: String?
-  let display_phone: String?
-  let review_count: Int?
-  let categories: [Categories]?
-  let rating: Double?
-  let coordinates: Location?
-  let photos: [String]?
-  let price: String?
-  let hours: [Hours]?
-}
-
-
-var vSpinner : UIView?
- 
-extension UIViewController {
-    func showSpinner(onView : UIView) {
-        let spinnerView = UIView.init(frame: onView.bounds)
-        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let ai = UIActivityIndicatorView.init(style: .whiteLarge)
-        ai.startAnimating()
-        ai.center = spinnerView.center
+    var favorites = [Favorite]()
+    
+    func setFavorites(_ faves : [Favorite]) {
+        favorites = faves
         
-        DispatchQueue.main.async {
-            spinnerView.addSubview(ai)
-            onView.addSubview(spinnerView)
+        // saveFavorites on different thread for performance
+        let priority = DispatchQoS.QoSClass.default
+        DispatchQueue.global(qos: priority).async {
+            // do some task
+            self.saveFavorites()
+            self.getFavorites()
+            DispatchQueue.main.async {
+                // update some UI
+            }
         }
-        
-        vSpinner = spinnerView
     }
     
-    func removeSpinner() {
-        DispatchQueue.main.async {
-            vSpinner?.removeFromSuperview()
-            vSpinner = nil
+    func getFavorites() {
+        if (loadFavorites() != nil && loadFavorites()?.count != 0) {
+            print("Favorites found on device  " + String(describing: loadFavorites()?.count) )
+            let loadedVFavorites = loadFavorites()
+            favorites = loadedVFavorites!
+            Favorites.global = favorites
+        } else {
+            favorites = [Favorite]()
+            Favorites.global = favorites
         }
     }
+    
+    // MARK: NSCoding
+   private func saveFavorites() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(favorites, toFile: Favorite.ArchiveURL.path)
+        if !isSuccessfulSave {
+            print("Failed to save visualizationImages...")
+        } else {
+            print("Saved :-) visualizationImages...")
+        }
+    }
+    
+    private func loadFavorites() -> [Favorite]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Favorite.ArchiveURL.path) as? [Favorite]
+    }
+    
 }
+

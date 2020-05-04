@@ -148,24 +148,17 @@ class DetailViewController: BaseScrollableViewController {
   }
   
   private func configureView() {
-    //guard let detailItem = detailItem else { return }
     detailDescriptionLabel = UILabel.init()
     detailDescriptionLabel.text = business?.name ?? "No Name Set"
     
     businessNameLabel.text = business?.name
     businessRatingCount.text = "\(business?.price ?? "-") ∙ ★\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
-    businessDistanceLabel.text = "\(business?.distance ?? 0)* "
+    businessDistanceLabel.text = "\(business?.distance.getMiles() ?? "0 mi")* "
     businessCaptionLabel.text = business?.categories
     
     navigationItem.title = business?.name
     mapView.isHidden = false
   }
-  
-  //  func setDetailItem(newDetailItem: YLPBusiness) {
-  //    //guard detailItem != newDetailItem else { return }
-  //    //detailItem = newDetailItem
-  //    //configureView()
-  //  }
   
   private func updateFavoriteBarButtonState() {
     _favorite = DetailViewController.favoritesList.contains(business?.identifier ?? "")
@@ -174,6 +167,10 @@ class DetailViewController: BaseScrollableViewController {
   
   @objc private func onFavoriteBarButtonSelected(_ sender: Any) {
     _favorite.toggle()
+    var favorites = [Favorite]()
+    favorites = Favorites.global
+    favorites.append(Favorite.init(business: business!)!)
+    FavoritesHandler().setFavorites(favorites)
     
     DetailViewController.favoritesList.append(business!.identifier)
     DetailViewController.saveFavoritesList(list: DetailViewController.favoritesList)
