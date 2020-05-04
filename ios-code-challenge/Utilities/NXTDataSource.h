@@ -14,7 +14,7 @@
 
 - (instancetype)initWithObjects:(NSArray *)objects;
    
-- (void)setDetailView:(UIViewController *)viewController;
+- (void)setDetailAction:(UIViewController *)view;
 - (void)setObjects:(NSArray *)objects;
 - (void)appendObjects:(NSArray *)objects;
 - (void)insertObject:(id)object atIndex:(NSUInteger)index;

@@ -10,8 +10,9 @@ import UIKit
 import MapKit
 
 class MasterViewController: UITableViewController, UISearchBarDelegate {
-  
+  @objc var tabViewController: TabBarViewController?
   @objc var detailViewController: DetailViewController?
+  
   let locationManager = CLLocationManager()//Use for GPS permissions
   
   var isLocationQuery = false
@@ -21,32 +22,32 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
   var timer: Timer?
   var totalResults: UInt = 0
   
+   lazy private var dataSource: NXTDataSource? = {
+     guard let dataSource = NXTDataSource(objects: nil) else { return nil }
+     dataSource.tableViewDidReceiveData = { [weak self] in
+       guard let strongSelf = self else { return }
+       strongSelf.tableView.reloadData()
+     }
+     return dataSource
+   }()
+   
+  
   lazy var searchBar: UISearchBar! = {
     let bar = UISearchBar(frame: .zero)
     bar.placeholder = "Search"
     bar.translatesAutoresizingMaskIntoConstraints = false
     return bar
   }()
-  
-  lazy private var dataSource: NXTDataSource? = {
-    guard let dataSource = NXTDataSource(objects: nil) else { return nil }
-    dataSource.tableViewDidReceiveData = { [weak self] in
-      guard let strongSelf = self else { return }
-      strongSelf.tableView.reloadData()
-    }
-    return dataSource
-  }()
+ 
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    splitViewController?.preferredDisplayMode = .allVisible
     
+    searchBar.delegate = self
+
     tableView.dataSource = dataSource
     tableView.delegate = dataSource
     tableView.allowsSelection = true
-    
-    searchBar.delegate = self
-    self.navigationItem.titleView = searchBar
     
     ///Enable GPS usage
     locationManager.delegate = self
@@ -54,12 +55,15 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
     locationManager.requestWhenInUseAuthorization()
     locationManager.requestLocation()
       
+    dataSource?.setDetailAction(tabViewController)
     setLayout()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     self.clearsSelectionOnViewWillAppear = self.splitViewController?.isCollapsed ?? false
     super.viewDidAppear(animated)
+    
+    self.tabBarController?.navigationItem.titleView = searchBar
   }
   
   
@@ -68,48 +72,49 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
   }
   
   // MARK: - Navigation
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    
-    debugPrint("MasterView:: prepareForSegue #\(segue.identifier ?? "").")
-    
-    if segue.identifier == "showDetail" {
-      guard let indexPath = tableView.indexPathForSelectedRow, let controller = segue.destination as? DetailViewController
-        else {
-          detailViewController = DetailViewController()
-          debugPrint("MasterView:: prepareForSegue RETURN.")
-          //transitionDetailView(indexPath: indexPath)
-          return
-      }
-      detailViewController = controller
-      transitionDetailView(indexPath: indexPath)
-    }
-  }
+//  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//
+//    debugPrint("MasterView:: prepareForSegue #\(segue.identifier ?? "").")
+//
+//    if segue.identifier == "showDetail" {
+//      guard let indexPath = tableView.indexPathForSelectedRow, let controller = segue.destination as? DetailViewController
+//        else {
+//          detailViewController = DetailViewController()
+//          debugPrint("MasterView:: prepareForSegue RETURN.")
+//          //transitionDetailView(indexPath: indexPath)
+//          return
+//      }
+//      detailViewController = controller
+//      transitionDetailView(indexPath: indexPath)
+//    }
+//  }
   
-  @objc func transitionDetailView(indexPath: IndexPath) {
+//  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//    debugPrint("MasterView:: cell #\(indexPath.item) tapped.")
+//    transitionDetailView(indexPath: indexPath)
+//  }
+
+@objc  func transitionDetailView() {
+    let indexPath = tableView.indexPathForSelectedRow!
+    
     detailViewController!.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
     detailViewController!.navigationItem.leftItemsSupplementBackButton = true
-    
-    
+
+
     let cell = tableView.cellForRow(at: indexPath) as! NXTBusinessTableViewCell
     let business = cell.business
-    
+
     debugPrint("MasterView:: transitionDetailView: business = #\(cell.business?.name ?? "") tapped.")
     detailViewController?.business = business
     let image = cell.businessImage.image?.cgImage?.copy()
     detailViewController?.imageView!.image = UIImage.init(cgImage: image!)
-    
+
     //Show detailView for portriat iPhone
     if splitViewController?.isCollapsed ?? false {
       let detailNavController = detailViewController?.navigationController
       splitViewController?.showDetailViewController(detailNavController!, sender: self)
     }
   }
-  
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    debugPrint("MasterView:: cell #\(indexPath.item) tapped.")
-    transitionDetailView(indexPath: indexPath)
-  }
-  
   //MARK: - SearchQuery
   func executeSearch(query: YLPSearchQuery, page: Bool = false) {
     query.limit = 35
@@ -120,9 +125,9 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
         let businesses = searchResult?.businesses else {
           return
       }
-      
+    
       !page ? dataSource.setObjects(businesses) : dataSource.appendObjects(businesses)
-      dataSource.setDetailView(self)
+      //dataSource.setDetailAction(#selector(self!.transitionDetailView))
       self!.totalResults = searchResult?.total ?? UInt(businesses.count)
       
       strongSelf.tableView.reloadData()
@@ -145,7 +150,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
     guard let searchBarText = searchBar.text else { return }
     searchString = searchBarText
     
-    let query = YLPSearchQuery(location: searchBarText)
+   // let query = YLPSearchQuery(location: searchBarText)
    }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -195,14 +200,13 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
     if isLocationQuery {
       query = YLPSearchQuery(coordinates: locationManager.location!)
     } else {
-      query = YLPSearchQuery(location: "searchBarText")
+      query = YLPSearchQuery(location: searchString ?? "")
     }
     
     debugPrint("MasterView:: executePageQuery #\(tableView.numberOfRows(inSection: 0)).")
     query!.offset = NSNumber.init(integerLiteral: tableView.numberOfRows(inSection: 0))
     executeSearch(query: query!, page: true)
   }
-  
 }
 
 

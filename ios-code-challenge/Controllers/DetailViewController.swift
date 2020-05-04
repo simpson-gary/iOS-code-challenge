@@ -9,10 +9,16 @@
 import UIKit
 import MapKit
 
+protocol UpdateMapView {
+  func dropPinZoomIn(coordinate: CLLocationCoordinate2D, name: String)
+}
+
 class DetailViewController: BaseScrollableViewController {
   
   var initialLocation: CLLocation?
   let regionRadius: CLLocationDistance = 1000
+  
+  let searchCompleter = MKLocalSearchCompleter()
   
   static let favoritesKey = "iosCodeChallenge.favorites"
   static var favoritesList = [String]()
@@ -22,6 +28,10 @@ class DetailViewController: BaseScrollableViewController {
       self.navigationController?.title = business?.name
       businessDetailsStack.isHidden = false
       updateFavoriteBarButtonState()
+      debugPrint(business?.latitude ?? "ERROR NO LATITUDE")
+      let coordinate = CLLocationCoordinate2DMake(business?.latitude as! CLLocationDegrees, business?.longitude as! CLLocationDegrees)
+      
+      self.dropPinZoomIn(coordinate: coordinate, name: business?.name ?? "")
       configureView()
     }
   }
@@ -115,6 +125,9 @@ class DetailViewController: BaseScrollableViewController {
     
     DetailViewController.favoritesList = DetailViewController.loadFavoritesList()
     
+//    searchCompleter.delegate = self as! MKLocalSearchCompleterDelegate
+//    searchCompleter.region = MKCoordinateRegion(MKMapRect.world)
+    
     //        configureView()
     navigationItem.rightBarButtonItems = [favoriteBarButtonItem]
     setLayout()
@@ -180,4 +193,20 @@ class DetailViewController: BaseScrollableViewController {
   static func saveFavoritesList(list: [String]) {
     UserDefaults.standard.set(list, forKey: favoritesKey)
   }
+}
+
+extension DetailViewController: UpdateMapView {
+  func dropPinZoomIn(coordinate: CLLocationCoordinate2D, name: String){
+      // Clear existing and add new pin.
+      mapView.removeAnnotations(mapView.annotations)
+      let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = name
+        
+        mapView.addAnnotation(annotation)
+      
+        let span =  MKCoordinateSpan(latitudeDelta: 0.07, longitudeDelta: 0.07)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+    }
 }

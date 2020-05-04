@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "YLPBusiness.h"
 
 @implementation YLPBusiness
@@ -14,6 +15,13 @@
 - (instancetype)initWithAttributes:(NSDictionary *)attributes
 {
   if(self = [super init]) {
+    
+    //NSLog(@"REgion is %@", attributes);
+    NSDictionary *coordinates = attributes[@"coordinates"];
+    //NSDictionary *center = region[@"center"];
+    //NSLog(@"REgion is %@", region);
+    //NSLog(@"Center is %@", center);
+    
     _distance = attributes[@"distance"];
     _identifier = attributes[@"id"];
     _imageUrl = attributes[@"image_url"];
@@ -22,7 +30,8 @@
     _rating = attributes[@"rating"];
     _reviewCount = attributes[@"review_count"];
     _categories = [self.class categoriesFromJSONArray:attributes[@"categories"]];
-    //_image = [self.class imageFromUrl:attributes[@"image_url"]];
+    _latitude = coordinates[@"latitude"];
+    _longitude = coordinates[@"longitude"];
   }
   
   return self;
@@ -41,29 +50,5 @@
   
   return mutableCategoriesJSON;
 }
-
-//+ (UIImage *)imageFromUrl:(NSString *)url
-//{
-// // __block UIImage *image = [[UIImage alloc] init];
-//  
-// dispatch_async(dispatch_get_global_queue(0,0), ^{
-//      NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: url]];
-//    if ( data == nil ) {
-//      NSLog(@"URL is nil");
-//          return;
-//    }
-//    UIImage* image = [UIImage imageWithData:data];
-//      dispatch_async(dispatch_get_main_queue(), ^{
-//          // WARNING: is the cell still using the same data by this point??
-//
-//        //NSLog(@"Setting image is %f", image.size.height);
-//        return image;
-//        
-//        //NSLog(@"Setting image is %f", image.size.height);
-//      });
-//  });
-//  
-//  return nil;
-//}
 
 @end

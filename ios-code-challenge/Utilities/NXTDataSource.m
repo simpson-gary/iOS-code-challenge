@@ -15,7 +15,7 @@
 @interface NXTDataSource()
 
 @property (nonatomic, strong) NSMutableArray *mutableObjects;
-@property (nonatomic, strong) MasterViewController *masterView;
+@property (nonatomic, strong) TabBarViewController *masterView;
 
 @end
 
@@ -73,13 +73,6 @@
        NSLog(@"tableView::  didDisplayCell = %ld & %ld", (long)[tableView numberOfRowsInSection:0], (long)indexPath.row);
        [_masterView executePageQuery];
      }
-  
-//  if([cell respondsToSelector:@selector(willDisplayCellForObject:)]) {
-//    id<NXTCellForObjectDelegate> object = self.mutableObjects[indexPath.row];
-//
-//
-//    [cell willDisplayCellForObject:object];
-//  }
 }
 
 -(void) tableView:(UITableView *)tableView didDisplayCell:(id<NXTBindingDataForObjectDelegate>)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -91,10 +84,9 @@
 {
   NSLog(@"tableView::  didSelectRowAtIndexPath");
     NXTBusinessTableViewCell *cell = [tableView cellForRowAtIndexPath: indexPath];
-  //NSLog(@"business is %@", cell.business);
-  _masterView.detailViewController.business = cell.business;
-  
-  [_masterView transitionDetailViewWithIndexPath:indexPath];
+  ///NSLog(@"business is %@", cell.business);
+ 
+  [_masterView transitionDetailViewWithCell:cell];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
@@ -115,9 +107,9 @@
 }
 
 #pragma mark - Getters & Setters
-- (void)setDetailView:(MasterViewController *)viewController
+- (void)setDetailAction:(TabBarViewController *)view
 {
-  self.masterView = viewController;
+  self.masterView = view;
 }
 
 - (void)setObjects:(NSArray *)objects

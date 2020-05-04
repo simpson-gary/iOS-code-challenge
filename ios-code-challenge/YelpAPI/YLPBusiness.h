@@ -21,6 +21,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, copy) NSString *categories;
 
 /**
+ *  Yelp Latitude position of map bounds center for this business.
+ */
+@property (nonatomic, readonly, copy) NSNumber *latitude;
+
+/**
+ *  Yelp  Longintude position of map bounds center for this business.
+ */
+@property (nonatomic, readonly, copy) NSNumber *longitude;
+
+/**
  *  Yelp distance of this business.
  */
 @property (nonatomic, readonly, copy) NSNumber *distance;
