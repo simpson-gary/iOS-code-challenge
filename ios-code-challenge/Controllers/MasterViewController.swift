@@ -21,9 +21,6 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
   var timer: Timer?
   var totalResults: UInt = 0
   
-  
-  
-  
   lazy var searchBar: UISearchBar! = {
     let bar = UISearchBar(frame: .zero)
     bar.placeholder = "Search"
@@ -126,6 +123,8 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
       
       !page ? dataSource.setObjects(businesses) : dataSource.appendObjects(businesses)
       dataSource.setDetailView(self)
+      self!.totalResults = searchResult?.total ?? UInt(businesses.count)
+      
       strongSelf.tableView.reloadData()
     })
   }
