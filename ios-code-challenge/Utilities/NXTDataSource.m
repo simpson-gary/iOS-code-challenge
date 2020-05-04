@@ -66,26 +66,20 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView willDisplayCell:(id<NXTBindingDataForObjectDelegate>)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-  //NSLog(@"tableView::  didDisplayCell = %ld & %ld", (long)[tableView numberOfRowsInSection:0], (long)indexPath.row);
-       
-     if(indexPath.row >= [tableView numberOfRowsInSection:0] - 7) {
-       NSLog(@"tableView::  didDisplayCell = %ld & %ld", (long)[tableView numberOfRowsInSection:0], (long)indexPath.row);
-       [_masterView executePageQuery];
-     }
+  
+  if(indexPath.row >= [tableView numberOfRowsInSection:0] - 7) {
+    [_masterView executePageQuery];
+  }
 }
 
 -(void) tableView:(UITableView *)tableView didDisplayCell:(id<NXTBindingDataForObjectDelegate>)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"tableView::  didDisplayCell = %ld & %ld", (long)[tableView numberOfRowsInSection:0], (long)indexPath.row);
+  
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  NSLog(@"tableView::  didSelectRowAtIndexPath");
-    NXTBusinessTableViewCell *cell = [tableView cellForRowAtIndexPath: indexPath];
-  ///NSLog(@"business is %@", cell.business);
- 
+  NXTBusinessTableViewCell *cell = [tableView cellForRowAtIndexPath: indexPath];
   [_masterView transitionDetailViewWithCell:cell];
 }
 
@@ -116,9 +110,9 @@
 {
   NSArray *sortedArray;
   sortedArray = [objects sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-      NSNumber *first = [(YLPBusiness*)a distance];
-      NSNumber *second = [(YLPBusiness*)b distance];
-      return [first compare:second];
+    NSNumber *first = [(YLPBusiness*)a distance];
+    NSNumber *second = [(YLPBusiness*)b distance];
+    return [first compare:second];
   }];
   
   [self.mutableObjects setArray:sortedArray];

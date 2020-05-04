@@ -7,7 +7,6 @@
 //
 
 #import "YLPBusiness+CellForObject.h"
-#import "NXTBusinessTableViewCell.h"
 #import <ios_code_challenge-Swift.h>
 
 NSString *const kNXTBusinessTableViewCellIdentifier = @"NXTBusinessTableViewCellIdentifier";

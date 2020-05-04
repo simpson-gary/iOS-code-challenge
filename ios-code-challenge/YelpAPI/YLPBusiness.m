@@ -32,7 +32,7 @@
   return self;
 }
 
-- (instancetype)initWithVariables:(NSString *)name : (NSString *)imageUrl : (NSString *)price: (NSNumber *)rating: (NSString *)identifier: (NSNumber *)reviewCount
+- (instancetype)initWithVariables: (NSString *)name :(NSString *)imageUrl :(NSString *)price : (NSNumber *)rating :(NSString *)identifier :(NSNumber *)reviewCount
 {
   if(self = [super init]) {
     _identifier = identifier;

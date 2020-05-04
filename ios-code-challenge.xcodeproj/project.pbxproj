@@ -36,7 +36,6 @@
 		C5CEF1CA2014DB71009D1571 /* YLPSearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1C92014DB71009D1571 /* YLPSearchQuery.m */; };
 		C5CEF1CD2014DC36009D1571 /* YLPSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1CC2014DC36009D1571 /* YLPSearch.m */; };
 		C5CEF1D02014E1FD009D1571 /* YLPBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1CF2014E1FD009D1571 /* YLPBusiness.m */; };
-		C5CEF1D52015350A009D1571 /* NXTBusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1D32015350A009D1571 /* NXTBusinessTableViewCell.m */; };
 		C5CEF1D62015350A009D1571 /* NXTBusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5CEF1D42015350A009D1571 /* NXTBusinessTableViewCell.xib */; };
 		C5CEF1D92015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1D82015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m */; };
 		C5CEF1DC20153618009D1571 /* YLPBusiness+CellForObject.m in Sources */ = {isa = PBXBuildFile; fileRef = C5CEF1DB20153618009D1571 /* YLPBusiness+CellForObject.m */; };
@@ -107,8 +106,6 @@
 		C5CEF1CC2014DC36009D1571 /* YLPSearch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLPSearch.m; sourceTree = "<group>"; };
 		C5CEF1CE2014E1FD009D1571 /* YLPBusiness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLPBusiness.h; sourceTree = "<group>"; };
 		C5CEF1CF2014E1FD009D1571 /* YLPBusiness.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLPBusiness.m; sourceTree = "<group>"; };
-		C5CEF1D22015350A009D1571 /* NXTBusinessTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NXTBusinessTableViewCell.h; sourceTree = "<group>"; };
-		C5CEF1D32015350A009D1571 /* NXTBusinessTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NXTBusinessTableViewCell.m; sourceTree = "<group>"; };
 		C5CEF1D42015350A009D1571 /* NXTBusinessTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NXTBusinessTableViewCell.xib; sourceTree = "<group>"; };
 		C5CEF1D72015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NXTBusinessTableViewCell+YLPBusiness.h"; sourceTree = "<group>"; };
 		C5CEF1D82015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NXTBusinessTableViewCell+YLPBusiness.m"; sourceTree = "<group>"; };
@@ -288,8 +285,6 @@
 		C5CEF1D1201534CD009D1571 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C5CEF1D22015350A009D1571 /* NXTBusinessTableViewCell.h */,
-				C5CEF1D32015350A009D1571 /* NXTBusinessTableViewCell.m */,
 				C5CEF1D42015350A009D1571 /* NXTBusinessTableViewCell.xib */,
 				C5CEF1D72015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.h */,
 				C5CEF1D82015354C009D1571 /* NXTBusinessTableViewCell+YLPBusiness.m */,
@@ -507,7 +502,6 @@
 				8DC8B22C22A186E000CA0435 /* MasterViewController.swift in Sources */,
 				BDE0C14C245F0F3B0021D34E /* AppDelegate.swift in Sources */,
 				C5CEF1D02014E1FD009D1571 /* YLPBusiness.m in Sources */,
-				C5CEF1D52015350A009D1571 /* NXTBusinessTableViewCell.m in Sources */,
 				8DC8B21A22A1764500CA0435 /* DetailViewController.swift in Sources */,
 				C5CEF1CA2014DB71009D1571 /* YLPSearchQuery.m in Sources */,
 				BD205BB8245FAC74001D7F0B /* FavoritesViewController.swift in Sources */,

@@ -43,15 +43,12 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
   
   //MARK: - SearchBar
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-    debugPrint("MasterView:: searchBarTextDidBeginEditing #\(searchBar.text ?? "").")
-    
     if searchBar.text!.count < 0 {
       searchActive = true;
     }
   }
   
   func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-    debugPrint("MasterView:: searchBarTextDidEndEditing #\(searchBar.text ?? "").")
     searchActive = false;
     
     guard let searchBarText = searchBar.text else { return }
@@ -59,8 +56,6 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    debugPrint("MasterView:: searchBarSearchButtonClicked #\(searchBar.text ?? "").")
-    
     if (searchActive) {
       executeTextSearch()
     }
@@ -69,18 +64,15 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    debugPrint("MasterView:: searchBarCancelButtonClicked #\(searchBar.text ?? "").")
     searchActive = false;
   }
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    debugPrint("MasterView:: textDidChange #\(searchBar.text ?? "").")
     guard let searchBarText = searchBar.text else { return }
     searchString = searchBarText
     
     searchActive = true
     if timer != nil && timer!.isValid {
-      debugPrint("MasterView:: timer.invalidate()")
       timer?.invalidate()
     }
     
@@ -89,7 +81,6 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
   }
   
   @objc func executeTextSearch() {
-    debugPrint("MasterView:: executeTextSearch #\(searchBar.text ?? "").")
     guard let searchBarText = searchBar.text else { return }
     let query = YLPSearchQuery(location: searchBarText)
     searchString = searchBarText
@@ -97,21 +88,6 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
     executeSearch(query: query)
     searchActive = false
     timer!.invalidate()
-  }
-  
-  @objc override func executePageQuery() {
-    var query: YLPSearchQuery?
-    
-    if isLocationQuery {
-      query = YLPSearchQuery(coordinates: locationManager.location!)
-    } else {
-      query = YLPSearchQuery(location: searchString ?? "")
-    }
-    
-    debugPrint("MasterView:: executePageQuery #\(tableView.numberOfRows(inSection: 0)).")
-    query!.offset = NSNumber.init(integerLiteral: tableView.numberOfRows(inSection: 0))
-    query!.limit = 35
-    executeSearch(query: query!, page: true)
   }
 }
 
@@ -135,6 +111,6 @@ extension MasterViewController : CLLocationManagerDelegate {
   }
   
   func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-    print("error:: \(error)")
+    debugPrint("ERROR:: \(error)")
   }
 }

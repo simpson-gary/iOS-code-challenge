@@ -54,7 +54,7 @@
     }
   
     if(self.limit) {
-      params[@"limit"] = self.limit;
+      params[@"limit"] = self.limit ;
     }
   
     if(self.term) {

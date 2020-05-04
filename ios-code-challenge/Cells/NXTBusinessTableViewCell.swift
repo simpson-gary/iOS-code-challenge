@@ -8,13 +8,13 @@
 
 import UIKit
 
- class NXTBusinessTableViewCell: UITableViewCell {
+class NXTBusinessTableViewCell: UITableViewCell {
   
- @objc var business: YLPBusiness? {
+  @objc var business: YLPBusiness? {
     didSet {
       businessNameLabel.text = business?.name
       businessRatingCount.text = "★\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
-      businessDescriptionLabel.text = "\(business?.distance.getMiles() ?? "0m")* "
+      businessMilesLabel.text = "\(business?.distance.getMiles() ?? "0m")"
       businessCaptionLabel.text = business?.categories
       businessImage.image = business?.image
     }
@@ -27,7 +27,7 @@ import UIKit
     return lbl
   }()
   
-  private let businessDescriptionLabel : UILabel = {
+  private let businessMilesLabel : UILabel = {
     let lbl = UILabel()
     lbl.font = UIFont.preferredFont(forTextStyle: .body)
     lbl.textAlignment = .left
@@ -59,43 +59,30 @@ import UIKit
     return imgView
   }()
   
-//  
-//  override var isSelected: Bool {
-//    didSet {
-//      if isSelected {
-//        self.backgroundColor = .red//UIColor.systemGray.withAlphaComponent(0.2)
-//      } else {
-//        self.backgroundColor = UIColor.systemGray.withAlphaComponent(0.2)
-//      }
-//    }
-//  }
-  
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     addSubview(businessImage)
     addSubview(businessNameLabel)
-    addSubview(businessDescriptionLabel)
+    addSubview(businessMilesLabel)
     addSubview(businessCaptionLabel)
     addSubview(businessRatingCount)
     
     businessImage.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: nil, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, paddingRight: 0, width: 80, height: 0, enableInsets: false)
     businessNameLabel.anchor(top: topAnchor, left: businessImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0/*frame.size.width / 2*/, height: 0, enableInsets: false)
-    businessDescriptionLabel.anchor(top: businessNameLabel.bottomAnchor, left: businessImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0/*frame.size.width / 2*/, height: 0, enableInsets: false)
+    businessMilesLabel.anchor(top: businessNameLabel.bottomAnchor, left: businessImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0/*frame.size.width / 2*/, height: 0, enableInsets: false)
     
-    businessCaptionLabel.anchor(top: businessDescriptionLabel.bottomAnchor, left: businessImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0/*frame.size.width / 2*/, height: 0, enableInsets: false)
+    businessCaptionLabel.anchor(top: businessMilesLabel.bottomAnchor, left: businessImage.rightAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0/*frame.size.width / 2*/, height: 0, enableInsets: false)
     
     let stackView = UIStackView(arrangedSubviews: [businessRatingCount])
     stackView.distribution = .equalSpacing
     stackView.axis = .horizontal
     stackView.spacing = 5
     addSubview(stackView)
-    stackView.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor)
+    stackView.anchor(top: businessNameLabel.bottomAnchor, leading: nil, bottom: nil, trailing: trailingAnchor)
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
-  
 }
-
