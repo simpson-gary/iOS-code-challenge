@@ -32,6 +32,24 @@
   return self;
 }
 
+- (instancetype)initWithVariables:(NSString *)name : (NSString *)imageUrl : (NSString *)price: (NSNumber *)rating: (NSString *)identifier: (NSNumber *)reviewCount
+{
+  if(self = [super init]) {
+    //_distance = attributes[@"distance"];
+    _identifier = identifier;
+    _imageUrl = imageUrl;
+    _name = name;
+    _price = price;
+    _rating = rating;
+    _reviewCount = reviewCount;
+    //_categories = [self.class categoriesFromJSONArray:attributes[@"categories"]];//
+    //_latitude = coordinates[@"latitude"];
+    //_longitude = coordinates[@"longitude"];
+  }
+  
+  return self;
+}
+
 + (NSString *)categoriesFromJSONArray:(NSArray *)categoriesJSON
 {
   NSMutableString *mutableCategoriesJSON = [[NSMutableString alloc] init];

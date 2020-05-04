@@ -2,7 +2,7 @@
 //  MasterViewControllerS.swift
 //  ios-code-challenge
 //
-//  Created by Joe Rocca on 5/31/19.
+//  Created by Gary Simpson on 5/31/19.
 //  Copyright © 2019 Dustin Lange. All rights reserved.
 //
 
@@ -14,16 +14,6 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
   var searchString: String?
   var timer: Timer?
   var totalResults: UInt = 0
-//
-//   lazy private var dataSource: NXTDataSource? = {
-//     guard let dataSource = NXTDataSource(objects: nil) else { return nil }
-//     dataSource.tableViewDidReceiveData = { [weak self] in
-//       guard let strongSelf = self else { return }
-//       strongSelf.tableView.reloadData()
-//     }
-//     return dataSource
-//   }()
-   
   
   lazy var searchBar: UISearchBar! = {
     let bar = UISearchBar(frame: .zero)
@@ -31,25 +21,17 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
     bar.translatesAutoresizingMaskIntoConstraints = false
     return bar
   }()
- 
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     searchBar.delegate = self
-
-//    tableView.dataSource = dataSource
-//    tableView.delegate = dataSource
-//    tableView.allowsSelection = true
-//
+    
     ///Enable GPS usage
     locationManager.delegate = self
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
     locationManager.requestWhenInUseAuthorization()
     locationManager.requestLocation()
-      
-//    dataSource?.setDetailAction(tabViewController)
-    setLayout()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -59,81 +41,14 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
     self.tabBarController?.navigationItem.titleView = searchBar
   }
   
-  
-  func setLayout() {
-      
-  }
-  
-  // MARK: - Navigation
-//  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//
-//    debugPrint("MasterView:: prepareForSegue #\(segue.identifier ?? "").")
-//
-//    if segue.identifier == "showDetail" {
-//      guard let indexPath = tableView.indexPathForSelectedRow, let controller = segue.destination as? DetailViewController
-//        else {
-//          detailViewController = DetailViewController()
-//          debugPrint("MasterView:: prepareForSegue RETURN.")
-//          //transitionDetailView(indexPath: indexPath)
-//          return
-//      }
-//      detailViewController = controller
-//      transitionDetailView(indexPath: indexPath)
-//    }
-//  }
-  
-//  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//    debugPrint("MasterView:: cell #\(indexPath.item) tapped.")
-//    transitionDetailView(indexPath: indexPath)
-//  }
-
-//@objc  func transitionDetailView() {
-//    let indexPath = tableView.indexPathForSelectedRow!
-//
-//    detailViewController!.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-//    detailViewController!.navigationItem.leftItemsSupplementBackButton = true
-//
-//
-//    let cell = tableView.cellForRow(at: indexPath) as! NXTBusinessTableViewCell
-//    let business = cell.business
-//
-//    debugPrint("MasterView:: transitionDetailView: business = #\(cell.business?.name ?? "") tapped.")
-//    detailViewController?.business = business
-//    let image = cell.businessImage.image?.cgImage?.copy()
-//    detailViewController?.imageView!.image = UIImage.init(cgImage: image!)
-//
-//    //Show detailView for portriat iPhone
-//    if splitViewController?.isCollapsed ?? false {
-//      let detailNavController = detailViewController?.navigationController
-//      splitViewController?.showDetailViewController(detailNavController!, sender: self)
-//    }
-//  }
-//  //MARK: - SearchQuery
-//  func executeSearch(query: YLPSearchQuery, page: Bool = false) {
-//
-//    AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
-//      guard let strongSelf = self,
-//        let dataSource = strongSelf.dataSource,
-//        let businesses = searchResult?.businesses else {
-//          return
-//      }
-//
-//      !page ? dataSource.setObjects(businesses) : dataSource.appendObjects(businesses)
-//      //dataSource.setDetailAction(#selector(self!.transitionDetailView))
-//      self!.totalResults = searchResult?.total ?? UInt(businesses.count)
-//
-//      strongSelf.tableView.reloadData()
-//    })
-//  }
-  
   //MARK: - SearchBar
-   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-     debugPrint("MasterView:: searchBarTextDidBeginEditing #\(searchBar.text ?? "").")
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    debugPrint("MasterView:: searchBarTextDidBeginEditing #\(searchBar.text ?? "").")
     
-     if searchBar.text!.count < 0 {
-       searchActive = true;
-     }
-   }
+    if searchBar.text!.count < 0 {
+      searchActive = true;
+    }
+  }
   
   func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
     debugPrint("MasterView:: searchBarTextDidEndEditing #\(searchBar.text ?? "").")
@@ -141,9 +56,7 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
     
     guard let searchBarText = searchBar.text else { return }
     searchString = searchBarText
-    
-   // let query = YLPSearchQuery(location: searchBarText)
-   }
+  }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     debugPrint("MasterView:: searchBarSearchButtonClicked #\(searchBar.text ?? "").")
@@ -157,7 +70,7 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     debugPrint("MasterView:: searchBarCancelButtonClicked #\(searchBar.text ?? "").")
-      searchActive = false;
+    searchActive = false;
   }
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -202,18 +115,17 @@ class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCel
   }
 }
 
-
 //MARK: - Location Extensions
 ///Used for locations permission.
 extension MasterViewController : CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
     if status == .authorizedWhenInUse {
-          locationManager.requestLocation()
+      locationManager.requestLocation()
     }
   }
-
+  
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
+    
     if let location = locations.first {
       let query = YLPSearchQuery(coordinates: location)
       query.parameters()
@@ -221,9 +133,8 @@ extension MasterViewController : CLLocationManagerDelegate {
       self.executeSearch(query: query)
     }
   }
-
+  
   func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
     print("error:: \(error)")
   }
 }
-

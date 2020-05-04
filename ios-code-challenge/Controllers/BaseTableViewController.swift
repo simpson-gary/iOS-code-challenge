@@ -60,6 +60,7 @@ import UIKit
   
   //MARK: - SearchQuery
   func executeSearch(query: YLPSearchQuery, page: Bool = false) {
+    showSpinner(onView: tableView)
     
     AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
       guard let strongSelf = self,
@@ -71,6 +72,7 @@ import UIKit
       dataSource.appendObjects(businesses)
       
       strongSelf.tableView.reloadData()
+      self?.removeSpinner()
     })
   }
 
@@ -86,5 +88,10 @@ import UIKit
     debugPrint("MasterView:: executePageQuery #\(tableView.numberOfRows(inSection: 0)).")
     query!.offset = NSNumber.init(integerLiteral: tableView.numberOfRows(inSection: 0))
     executeSearch(query: query!, page: true)
+  }
+  
+  func updateDataSource(_ objects: [YLPBusiness]) {
+    debugPrint("BaseTableView:: updateDataSource with #\(objects.count).")
+    dataSource?.appendObjects(objects)
   }
 }
