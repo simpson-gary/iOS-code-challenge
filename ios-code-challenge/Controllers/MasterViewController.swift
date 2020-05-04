@@ -9,27 +9,20 @@
 import UIKit
 import MapKit
 
-class MasterViewController: UITableViewController, UISearchBarDelegate {
-  @objc var tabViewController: TabBarViewController?
-  @objc var detailViewController: DetailViewController?
-  
-  let locationManager = CLLocationManager()//Use for GPS permissions
-  
-  var isLocationQuery = false
-  
+class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCell>, UISearchBarDelegate {
   var searchActive: Bool = true
   var searchString: String?
   var timer: Timer?
   var totalResults: UInt = 0
-  
-   lazy private var dataSource: NXTDataSource? = {
-     guard let dataSource = NXTDataSource(objects: nil) else { return nil }
-     dataSource.tableViewDidReceiveData = { [weak self] in
-       guard let strongSelf = self else { return }
-       strongSelf.tableView.reloadData()
-     }
-     return dataSource
-   }()
+//
+//   lazy private var dataSource: NXTDataSource? = {
+//     guard let dataSource = NXTDataSource(objects: nil) else { return nil }
+//     dataSource.tableViewDidReceiveData = { [weak self] in
+//       guard let strongSelf = self else { return }
+//       strongSelf.tableView.reloadData()
+//     }
+//     return dataSource
+//   }()
    
   
   lazy var searchBar: UISearchBar! = {
@@ -45,17 +38,17 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
     
     searchBar.delegate = self
 
-    tableView.dataSource = dataSource
-    tableView.delegate = dataSource
-    tableView.allowsSelection = true
-    
+//    tableView.dataSource = dataSource
+//    tableView.delegate = dataSource
+//    tableView.allowsSelection = true
+//
     ///Enable GPS usage
     locationManager.delegate = self
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
     locationManager.requestWhenInUseAuthorization()
     locationManager.requestLocation()
       
-    dataSource?.setDetailAction(tabViewController)
+//    dataSource?.setDetailAction(tabViewController)
     setLayout()
   }
   
@@ -94,45 +87,44 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
 //    transitionDetailView(indexPath: indexPath)
 //  }
 
-@objc  func transitionDetailView() {
-    let indexPath = tableView.indexPathForSelectedRow!
-    
-    detailViewController!.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-    detailViewController!.navigationItem.leftItemsSupplementBackButton = true
-
-
-    let cell = tableView.cellForRow(at: indexPath) as! NXTBusinessTableViewCell
-    let business = cell.business
-
-    debugPrint("MasterView:: transitionDetailView: business = #\(cell.business?.name ?? "") tapped.")
-    detailViewController?.business = business
-    let image = cell.businessImage.image?.cgImage?.copy()
-    detailViewController?.imageView!.image = UIImage.init(cgImage: image!)
-
-    //Show detailView for portriat iPhone
-    if splitViewController?.isCollapsed ?? false {
-      let detailNavController = detailViewController?.navigationController
-      splitViewController?.showDetailViewController(detailNavController!, sender: self)
-    }
-  }
-  //MARK: - SearchQuery
-  func executeSearch(query: YLPSearchQuery, page: Bool = false) {
-    query.limit = 35
-    
-    AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
-      guard let strongSelf = self,
-        let dataSource = strongSelf.dataSource,
-        let businesses = searchResult?.businesses else {
-          return
-      }
-    
-      !page ? dataSource.setObjects(businesses) : dataSource.appendObjects(businesses)
-      //dataSource.setDetailAction(#selector(self!.transitionDetailView))
-      self!.totalResults = searchResult?.total ?? UInt(businesses.count)
-      
-      strongSelf.tableView.reloadData()
-    })
-  }
+//@objc  func transitionDetailView() {
+//    let indexPath = tableView.indexPathForSelectedRow!
+//
+//    detailViewController!.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+//    detailViewController!.navigationItem.leftItemsSupplementBackButton = true
+//
+//
+//    let cell = tableView.cellForRow(at: indexPath) as! NXTBusinessTableViewCell
+//    let business = cell.business
+//
+//    debugPrint("MasterView:: transitionDetailView: business = #\(cell.business?.name ?? "") tapped.")
+//    detailViewController?.business = business
+//    let image = cell.businessImage.image?.cgImage?.copy()
+//    detailViewController?.imageView!.image = UIImage.init(cgImage: image!)
+//
+//    //Show detailView for portriat iPhone
+//    if splitViewController?.isCollapsed ?? false {
+//      let detailNavController = detailViewController?.navigationController
+//      splitViewController?.showDetailViewController(detailNavController!, sender: self)
+//    }
+//  }
+//  //MARK: - SearchQuery
+//  func executeSearch(query: YLPSearchQuery, page: Bool = false) {
+//
+//    AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
+//      guard let strongSelf = self,
+//        let dataSource = strongSelf.dataSource,
+//        let businesses = searchResult?.businesses else {
+//          return
+//      }
+//
+//      !page ? dataSource.setObjects(businesses) : dataSource.appendObjects(businesses)
+//      //dataSource.setDetailAction(#selector(self!.transitionDetailView))
+//      self!.totalResults = searchResult?.total ?? UInt(businesses.count)
+//
+//      strongSelf.tableView.reloadData()
+//    })
+//  }
   
   //MARK: - SearchBar
    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -194,7 +186,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
     timer!.invalidate()
   }
   
-  @objc func executePageQuery() {
+  @objc override func executePageQuery() {
     var query: YLPSearchQuery?
     
     if isLocationQuery {
@@ -205,6 +197,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
     
     debugPrint("MasterView:: executePageQuery #\(tableView.numberOfRows(inSection: 0)).")
     query!.offset = NSNumber.init(integerLiteral: tableView.numberOfRows(inSection: 0))
+    query!.limit = 35
     executeSearch(query: query!, page: true)
   }
 }
@@ -218,9 +211,9 @@ extension MasterViewController : CLLocationManagerDelegate {
           locationManager.requestLocation()
     }
   }
-  
+
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    
+
     if let location = locations.first {
       let query = YLPSearchQuery(coordinates: location)
       query.parameters()
@@ -228,7 +221,7 @@ extension MasterViewController : CLLocationManagerDelegate {
       self.executeSearch(query: query)
     }
   }
-  
+
   func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
     print("error:: \(error)")
   }

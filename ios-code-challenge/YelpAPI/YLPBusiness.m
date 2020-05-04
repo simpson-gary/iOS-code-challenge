@@ -15,13 +15,8 @@
 - (instancetype)initWithAttributes:(NSDictionary *)attributes
 {
   if(self = [super init]) {
-    
-    //NSLog(@"REgion is %@", attributes);
     NSDictionary *coordinates = attributes[@"coordinates"];
-    //NSDictionary *center = region[@"center"];
-    //NSLog(@"REgion is %@", region);
-    //NSLog(@"Center is %@", center);
-    
+
     _distance = attributes[@"distance"];
     _identifier = attributes[@"id"];
     _imageUrl = attributes[@"image_url"];
