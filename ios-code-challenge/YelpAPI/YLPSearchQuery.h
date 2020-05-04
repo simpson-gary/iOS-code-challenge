@@ -7,11 +7,13 @@
 //
 
 @import Foundation;
+@import MapKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YLPSearchQuery : NSObject
 
+- (instancetype)initWithCoordinates:(CLLocation *)coordinates;
 - (instancetype)initWithLocation:(NSString *)location;
 - (NSDictionary *)parameters;
 
@@ -28,6 +30,17 @@ NS_ASSUME_NONNULL_BEGIN
  *  used (for example "discgolf", not "Disc Golf").
  */
 @property (nonatomic, copy, null_resettable) NSArray<NSString *> *categoryFilter;
+
+/**
+ *  Optional. Number of business results to return. By default, it will return 20.
+ *  Maximum is 50.
+ */
+@property (nonatomic, copy, null_resettable) NSNumber *limit;
+
+/**
+ *  Optional. Offset the list of returned business results by this amount.
+ */
+@property (nonatomic, copy, null_resettable) NSNumber *offset;
 
 /**
  *  Optional. Search radius in meters. If the value is too large, a AREA_TOO_LARGE

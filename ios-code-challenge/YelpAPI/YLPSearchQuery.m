@@ -6,11 +6,13 @@
 //  Copyright © 2018 Dustin Lange. All rights reserved.
 //
 
+#import <MapKit/MapKit.h>
 #import "YLPSearchQuery.h"
 
 @interface YLPSearchQuery()
 
 @property (nonatomic, copy) NSString *location;
+@property (nonatomic, copy) CLLocation *coordinates;
 
 @end
 
@@ -24,6 +26,16 @@
     
     return self;
 }
+
+- (instancetype)initWithCoordinates:(CLLocation *)coordinates
+{
+    if(self = [super init]) {
+      _coordinates = coordinates;
+    }
+    
+    return self;
+}
+
 - (NSDictionary *)parameters
 {
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -31,7 +43,20 @@
     if(self.location) {
         params[@"location"] = self.location;
     }
-    
+  
+    if(self.coordinates) {
+      params[@"longitude"] = [NSString stringWithFormat:@"%.20lf", self.coordinates.coordinate.longitude];
+      params[@"latitude"] = [NSString stringWithFormat:@"%.20lf", self.coordinates.coordinate.latitude];
+    }
+  
+    if(self.offset) {
+      params[@"offset"] = self.offset;
+    }
+  
+    if(self.limit) {
+      params[@"limit"] = self.limit ;
+    }
+  
     if(self.term) {
         params[@"term"] = self.term;
     }
@@ -43,7 +68,7 @@
     if(self.categoryFilter != nil && self.categoryFilter.count > 0) {
         params[@"categories"] = [self.categoryFilter componentsJoinedByString:@","];
     }
-    
+  
     return params;
 }
 

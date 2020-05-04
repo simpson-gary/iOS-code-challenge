@@ -8,13 +8,35 @@
 
 #import "NXTBusinessTableViewCell+YLPBusiness.h"
 #import "YLPBusiness.h"
+#import <ios_code_challenge-Swift.h>
 
 @implementation NXTBusinessTableViewCell (YLPBusiness) 
 
 - (void)configureCell:(YLPBusiness *)business
 {
-    // Business Name
-    self.nameLabel.text = business.name;
+      
+  //NSLog(@"URL is %@", business.imageUrl);
+  dispatch_async(dispatch_get_global_queue(0,0), ^{
+      NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: business.imageUrl]];
+    if ( data == nil ) {
+      NSLog(@"ImageURL is nil");
+          return;
+    }
+
+      dispatch_async(dispatch_get_main_queue(), ^{
+          // WARNING: is the cell still using the same data by this point??
+
+          //NSLog(@"setting image");
+          self.businessImage.image = [UIImage imageWithData: data];
+      });
+  });
+  
+  
+  // Business Name
+    self.business = business;
+//    NSLog(@"Distance is %@", business.distance);
+//  self.detailTextLabel.text = [NSString stringWithFormat:@"%@ ~ rating=%@", business.distance, business.rating];
+  //self.accessoryType = UITableViewCellAccessoryDetailButton;
 }
 
 #pragma mark - NXTBindingDataForObjectDelegate

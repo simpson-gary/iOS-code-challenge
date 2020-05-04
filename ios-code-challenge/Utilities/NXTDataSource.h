@@ -8,11 +8,13 @@
 
 @import Foundation;
 @import UIKit;
+//#import <ios-code-challenge-Bridging-Header.h>//;
 
 @interface NXTDataSource : NSObject <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 - (instancetype)initWithObjects:(NSArray *)objects;
-    
+   
+- (void)setDetailAction:(UIViewController *)view;
 - (void)setObjects:(NSArray *)objects;
 - (void)appendObjects:(NSArray *)objects;
 - (void)insertObject:(id)object atIndex:(NSUInteger)index;

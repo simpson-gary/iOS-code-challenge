@@ -2,60 +2,115 @@
 //  MasterViewControllerS.swift
 //  ios-code-challenge
 //
-//  Created by Joe Rocca on 5/31/19.
+//  Created by Gary Simpson on 5/31/19.
 //  Copyright © 2019 Dustin Lange. All rights reserved.
 //
 
 import UIKit
+import MapKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: BaseTableViewController<Any, NXTBusinessTableViewCell>, UISearchBarDelegate {
+  var searchActive: Bool = true
+  var searchString: String?
+  var timer: Timer?
+  var totalResults: UInt = 0
+  
+  lazy var searchBar: UISearchBar! = {
+    let bar = UISearchBar(frame: .zero)
+    bar.placeholder = "Search"
+    bar.translatesAutoresizingMaskIntoConstraints = false
+    return bar
+  }()
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-    var detailViewController: DetailViewController?
+    searchBar.delegate = self
     
-    lazy private var dataSource: NXTDataSource? = {
-        guard let dataSource = NXTDataSource(objects: nil) else { return nil }
-        dataSource.tableViewDidReceiveData = { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.tableView.reloadData()
-        }
-        return dataSource
-    }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.dataSource = dataSource
-        tableView.delegate = dataSource
-        
-        let query = YLPSearchQuery(location: "5550 West Executive Dr. Tampa, FL 33609")
-        AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
-            guard let strongSelf = self,
-                let dataSource = strongSelf.dataSource,
-                let businesses = searchResult?.businesses else {
-                    return
-            }
-            dataSource.setObjects(businesses)
-            strongSelf.tableView.reloadData()
-        })
+    ///Enable GPS usage
+    locationManager.delegate = self
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+    locationManager.requestWhenInUseAuthorization()
+    locationManager.requestLocation()
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    self.clearsSelectionOnViewWillAppear = self.splitViewController?.isCollapsed ?? false
+    super.viewDidAppear(animated)
+    
+    self.tabBarController?.navigationItem.titleView = searchBar
+  }
+  
+  //MARK: - SearchBar
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    if searchBar.text!.count < 0 {
+      searchActive = true;
+    }
+  }
+  
+  func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    searchActive = false;
+    
+    guard let searchBarText = searchBar.text else { return }
+    searchString = searchBarText
+  }
+  
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    if (searchActive) {
+      executeTextSearch()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController?.isCollapsed ?? false
-        super.viewDidAppear(animated)
+    searchBar.resignFirstResponder()
+  }
+  
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    searchActive = false;
+  }
+  
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    guard let searchBarText = searchBar.text else { return }
+    searchString = searchBarText
+    
+    searchActive = true
+    if timer != nil && timer!.isValid {
+      timer?.invalidate()
     }
     
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-//            guard let indexPath = tableView.indexPathForSelectedRow,
-//                let controller = segue.destination as? DetailViewController else {
-//                return
-//            }
-//            let object = objects[indexPath.row]
-//            controller.setDetailItem(newDetailItem: object)
-//            controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
-//            controller.navigationItem.leftItemsSupplementBackButton = true
-        }
-    }
+    timer = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(executeTextSearch), userInfo: nil, repeats: false)
+    RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
+  }
+  
+  @objc func executeTextSearch() {
+    guard let searchBarText = searchBar.text else { return }
+    let query = YLPSearchQuery(location: searchBarText)
+    searchString = searchBarText
+    isLocationQuery = false
+    executeSearch(query: query)
+    searchActive = false
+    timer!.invalidate()
+  }
+}
 
+//MARK: - Location Extensions
+///Used for locations permission.
+extension MasterViewController : CLLocationManagerDelegate {
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    if status == .authorizedWhenInUse {
+      locationManager.requestLocation()
+    }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    
+    if let location = locations.first {
+      let query = YLPSearchQuery(coordinates: location)
+      query.parameters()
+      isLocationQuery = true
+      self.executeSearch(query: query)
+    }
+  }
+  
+  func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    debugPrint("ERROR:: \(error)")
+  }
 }
