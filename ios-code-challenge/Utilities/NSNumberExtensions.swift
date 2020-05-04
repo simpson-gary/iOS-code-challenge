@@ -2,7 +2,7 @@
 //  NSNumberExtensions.swift
 //  ios-code-challenge
 //
-//  Created by Jinglz on 5/4/20.
+//  Created by Gary Simpson on 5/4/20.
 //  Copyright © 2020 Dustin Lange. All rights reserved.
 //
 

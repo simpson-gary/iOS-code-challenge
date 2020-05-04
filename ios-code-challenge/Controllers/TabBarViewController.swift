@@ -2,7 +2,7 @@
 //  TabBarViewController.swift
 //  ios-code-challenge
 //
-//  Created by Jinglz on 5/3/20.
+//  Created by Gary Simpson on 5/3/20.
 //  Copyright © 2020 Dustin Lange. All rights reserved.
 //
 

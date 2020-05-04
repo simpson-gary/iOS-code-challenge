@@ -22,6 +22,7 @@
 		BD9BC8612460632A0089D06E /* NSNumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BC8602460632A0089D06E /* NSNumberExtensions.swift */; };
 		BD9BC863246064160089D06E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD9BC862246064140089D06E /* Main.storyboard */; };
 		BD9BC865246065C50089D06E /* YLPBusinessDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BC864246065C50089D06E /* YLPBusinessDetails.swift */; };
+		BD9BC86724606D560089D06E /* FavoritesHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BC86624606D560089D06E /* FavoritesHandler.swift */; };
 		BDE0C14C245F0F3B0021D34E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE0C14B245F0F3B0021D34E /* AppDelegate.swift */; };
 		BDE0C14E245F48330021D34E /* BaseScrollableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE0C14D245F48330021D34E /* BaseScrollableViewController.swift */; };
 		BDE0C150245F504D0021D34E /* BaseBackgroundStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE0C14F245F504D0021D34E /* BaseBackgroundStackView.swift */; };
@@ -78,6 +79,7 @@
 		BD9BC8602460632A0089D06E /* NSNumberExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSNumberExtensions.swift; sourceTree = "<group>"; };
 		BD9BC862246064140089D06E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BD9BC864246065C50089D06E /* YLPBusinessDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YLPBusinessDetails.swift; sourceTree = "<group>"; };
+		BD9BC86624606D560089D06E /* FavoritesHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesHandler.swift; sourceTree = "<group>"; };
 		BDE0C14B245F0F3B0021D34E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BDE0C14D245F48330021D34E /* BaseScrollableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScrollableViewController.swift; sourceTree = "<group>"; };
 		BDE0C14F245F504D0021D34E /* BaseBackgroundStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseBackgroundStackView.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */,
 				BD9BC85E246003540089D06E /* Strings.swift */,
 				BD9BC8602460632A0089D06E /* NSNumberExtensions.swift */,
+				BD9BC86624606D560089D06E /* FavoritesHandler.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				C5CEF1CD2014DC36009D1571 /* YLPSearch.m in Sources */,
 				BDE0C150245F504D0021D34E /* BaseBackgroundStackView.swift in Sources */,
 				BD205BB6245FAC26001D7F0B /* TabBarViewController.swift in Sources */,
+				BD9BC86724606D560089D06E /* FavoritesHandler.swift in Sources */,
 				C5CEF1B92014411C009D1571 /* NXTDataSource.m in Sources */,
 				8DC8B22C22A186E000CA0435 /* MasterViewController.swift in Sources */,
 				BDE0C14C245F0F3B0021D34E /* AppDelegate.swift in Sources */,
