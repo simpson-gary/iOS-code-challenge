@@ -32,6 +32,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, null_resettable) NSArray<NSString *> *categoryFilter;
 
 /**
+ *  Optional. Number of business results to return. By default, it will return 20.
+ *  Maximum is 50.
+ */
+@property (nonatomic, copy, null_resettable) NSNumber *limit;
+
+/**
+ *  Optional. Offset the list of returned business results by this amount.
+ */
+@property (nonatomic, copy, null_resettable) NSNumber *offset;
+
+/**
  *  Optional. Search radius in meters. If the value is too large, a AREA_TOO_LARGE
  *  error may be returned. The max value is 40000 meters (25 miles).
  */

@@ -66,11 +66,25 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView willDisplayCell:(id<NXTBindingDataForObjectDelegate>)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  if([cell respondsToSelector:@selector(willDisplayCellForObject:)]) {
-    id<NXTCellForObjectDelegate> object = self.mutableObjects[indexPath.row];
-    
-    [cell willDisplayCellForObject:object];
-  }
+
+  //NSLog(@"tableView::  didDisplayCell = %ld & %ld", (long)[tableView numberOfRowsInSection:0], (long)indexPath.row);
+       
+     if(indexPath.row >= [tableView numberOfRowsInSection:0] - 7) {
+       NSLog(@"tableView::  didDisplayCell = %ld & %ld", (long)[tableView numberOfRowsInSection:0], (long)indexPath.row);
+       [_masterView executePageQuery];
+     }
+  
+//  if([cell respondsToSelector:@selector(willDisplayCellForObject:)]) {
+//    id<NXTCellForObjectDelegate> object = self.mutableObjects[indexPath.row];
+//
+//
+//    [cell willDisplayCellForObject:object];
+//  }
+}
+
+-(void) tableView:(UITableView *)tableView didDisplayCell:(id<NXTBindingDataForObjectDelegate>)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"tableView::  didDisplayCell = %ld & %ld", (long)[tableView numberOfRowsInSection:0], (long)indexPath.row);
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

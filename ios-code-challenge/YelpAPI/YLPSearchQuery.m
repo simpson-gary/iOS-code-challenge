@@ -49,6 +49,14 @@
       params[@"latitude"] = [NSString stringWithFormat:@"%.20lf", self.coordinates.coordinate.latitude];
     }
   
+    if(self.offset) {
+      params[@"offset"] = self.offset;
+    }
+  
+    if(self.limit) {
+      params[@"limit"] = self.limit;
+    }
+  
     if(self.term) {
         params[@"term"] = self.term;
     }
@@ -60,11 +68,6 @@
     if(self.categoryFilter != nil && self.categoryFilter.count > 0) {
         params[@"categories"] = [self.categoryFilter componentsJoinedByString:@","];
     }
-    
-    
-    
-  
-  
   
     return params;
 }

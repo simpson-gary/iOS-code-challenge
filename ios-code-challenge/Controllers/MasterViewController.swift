@@ -14,8 +14,15 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
   @objc var detailViewController: DetailViewController?
   let locationManager = CLLocationManager()//Use for GPS permissions
   
-  var searchActive: Bool = false
+  var isLocationQuery = false
+  
+  var searchActive: Bool = true
+  var searchString: String?
   var timer: Timer?
+  var totalResults: UInt = 0
+  
+  
+  
   
   lazy var searchBar: UISearchBar! = {
     let bar = UISearchBar(frame: .zero)
@@ -107,14 +114,17 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
   }
   
   //MARK: - SearchQuery
-  func executeSearch(query: YLPSearchQuery) {
+  func executeSearch(query: YLPSearchQuery, page: Bool = false) {
+    query.limit = 35
+    
     AFYelpAPIClient.shared().search(with: query, completionHandler: { [weak self] (searchResult, error) in
       guard let strongSelf = self,
         let dataSource = strongSelf.dataSource,
         let businesses = searchResult?.businesses else {
           return
       }
-      dataSource.setObjects(businesses)
+      
+      !page ? dataSource.setObjects(businesses) : dataSource.appendObjects(businesses)
       dataSource.setDetailView(self)
       strongSelf.tableView.reloadData()
     })
@@ -134,6 +144,8 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
     searchActive = false;
     
     guard let searchBarText = searchBar.text else { return }
+    searchString = searchBarText
+    
     let query = YLPSearchQuery(location: searchBarText)
    }
   
@@ -155,6 +167,7 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     debugPrint("MasterView:: textDidChange #\(searchBar.text ?? "").")
     guard let searchBarText = searchBar.text else { return }
+    searchString = searchBarText
     
     searchActive = true
     if timer != nil && timer!.isValid {
@@ -170,10 +183,27 @@ class MasterViewController: UITableViewController, UISearchBarDelegate {
     debugPrint("MasterView:: executeTextSearch #\(searchBar.text ?? "").")
     guard let searchBarText = searchBar.text else { return }
     let query = YLPSearchQuery(location: searchBarText)
+    searchString = searchBarText
+    isLocationQuery = false
     executeSearch(query: query)
     searchActive = false
     timer!.invalidate()
   }
+  
+  @objc func executePageQuery() {
+    var query: YLPSearchQuery?
+    
+    if isLocationQuery {
+      query = YLPSearchQuery(coordinates: locationManager.location!)
+    } else {
+      query = YLPSearchQuery(location: "searchBarText")
+    }
+    
+    debugPrint("MasterView:: executePageQuery #\(tableView.numberOfRows(inSection: 0)).")
+    query!.offset = NSNumber.init(integerLiteral: tableView.numberOfRows(inSection: 0))
+    executeSearch(query: query!, page: true)
+  }
+  
 }
 
 
@@ -190,6 +220,8 @@ extension MasterViewController : CLLocationManagerDelegate {
     
     if let location = locations.first {
       let query = YLPSearchQuery(coordinates: location)
+      query.parameters()
+      isLocationQuery = true
       self.executeSearch(query: query)
     }
   }
