@@ -60,7 +60,7 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
         let details = try JSONDecoder().decode(YLPBusinessDetails.self, from: data)
         ///Update details var object
         debugPrint(" ========================\n \(data)")
-        let business = YLPBusiness.init(variables: details.name ?? "", details.image_url!, details.price!, NSNumber(value: details.rating!), details.id!, NSNumber(value: details.review_count!))
+        let business = YLPBusiness.init(variables: details.name ?? "", details.image_url!, details.price!, NSNumber(value: details.rating!), details.id!, NSNumber(value: details.review_count!), "cat", NSNumber(value: details.coordinates?.latitude ?? 1000.123), NSNumber(value: details.coordinates?.longitude ?? 1000))
         
         DispatchQueue.main.async {
           self.updateDataSource([business])

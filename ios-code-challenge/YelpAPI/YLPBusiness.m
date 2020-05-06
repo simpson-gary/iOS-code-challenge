@@ -32,7 +32,7 @@
   return self;
 }
 
-- (instancetype)initWithVariables: (NSString *)name :(NSString *)imageUrl :(NSString *)price : (NSNumber *)rating :(NSString *)identifier :(NSNumber *)reviewCount
+- (instancetype)initWithVariables: (NSString *)name :(NSString *)imageUrl :(NSString *)price : (NSNumber *)rating :(NSString *)identifier :(NSNumber *)reviewCount :(NSString *)categories :(NSNumber *)latitude :(NSNumber *)longitude
 {
   if(self = [super init]) {
     _identifier = identifier;
@@ -41,6 +41,9 @@
     _price = price;
     _rating = rating;
     _reviewCount = reviewCount;
+    _categories = categories;
+    _latitude = latitude;
+    _longitude = longitude;
   }
   
   return self;

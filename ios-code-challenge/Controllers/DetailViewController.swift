@@ -41,7 +41,7 @@ class DetailViewController: BaseScrollableViewController {
       self.navigationController?.title = business?.name
       businessDetailsStack.isHidden = false
       updateFavoriteBarButtonState()
-      debugPrint(business?.latitude ?? "ERROR NO LATITUDE")
+      //debugPrint(business?.latitude ?? "ERROR NO LATITUDE")
 //      guard let coordinate = CLLocationCoordinate2DMake(business?.latitude as? CLLocationDegrees, business?.longitude as? CLLocationDegrees) else {
 //        return
 //      }
