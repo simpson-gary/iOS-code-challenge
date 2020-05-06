@@ -50,10 +50,10 @@ struct YLPBusinessDetails: Decodable {
 
 extension YLPBusinessDetails {
   func toYLPBusiness() -> YLPBusiness {
-    let business = YLPBusiness.init(variables: self.name ?? "", self.image_url!,
-                                    self.price!, NSNumber(value: self.rating!),
-                                    self.id!, NSNumber(value: self.review_count!),
-                                    self.getCategoryString(from: self.categories!),
+    let business = YLPBusiness.init(variables: self.name ?? "", self.image_url ?? "",
+                                    self.price ?? "", NSNumber(value: self.rating ?? 0),
+                                    self.id ?? "", NSNumber(value: self.review_count ?? 0),
+                                    self.getCategoryString(from: self.categories ?? [Categories]()),
                                     NSNumber(value: self.coordinates?.latitude ?? 1000.123),
                                     NSNumber(value: self.coordinates?.longitude ?? 1000))
     
@@ -61,10 +61,13 @@ extension YLPBusinessDetails {
   }
   
   func getCategoryString(from categories: [Categories]) -> String{
+    guard categories.count > 0 else {return ""}
+    
     var string = ""
     categories.forEach{ category in
       string.append("\(category.title!), ")
     }
+    
     string.removeLast()
     string.removeLast()
     return string

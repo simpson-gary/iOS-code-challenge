@@ -31,13 +31,13 @@ class TabBarViewController: UITabBarController {
   
   
   @objc func executePageQuery() {
-    
     switch self.selectedIndex {
     case 0:
       firstViewController.executePageQuery()
       break;
     case 1:
-      //secondViewController.executePageQuery()
+      debugPrint("TabBarViewController:: secondViewController! #\(self.selectedIndex).")
+      secondViewController.executePageQuery()
       break;
     default:
       debugPrint("TabBarViewController:: ERROR! #\(self.selectedIndex) Unaccounted for in switch.")

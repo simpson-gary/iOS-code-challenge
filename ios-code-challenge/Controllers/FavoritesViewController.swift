@@ -11,6 +11,7 @@ import UIKit
 class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableViewCell> {
   static let favoritesKey = "iosCodeChallenge.favorites"
   static var favoritesList = [String]()
+  static var favoritesDetailsList = [YLPBusinessDetails]()
   
   private let titleLabel : UILabel = {
     let lbl = UILabel()
@@ -47,6 +48,11 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
     }
   }
   
+  override func executePageQuery() {
+    let indexPath = tableView.indexPathForSelectedRow
+    //detailViewController?.businessDetails = FavoritesViewController.favoritesDetailsList[indexPath?.row ?? 0]
+  }
+  
   fileprivate func fetchYelpBusinessDetails(withID  id: String, using session: URLSession = .shared) {
     session.request(.details(withID: id)) {
       data, response, error in
@@ -60,6 +66,7 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
         let details = try JSONDecoder().decode(YLPBusinessDetails.self, from: data)
         ///Update details var object
         debugPrint(" ========================\n \(data)")
+       FavoritesViewController.favoritesDetailsList.append(details)
         let business = details.toYLPBusiness()
         
         DispatchQueue.main.async {
