@@ -42,32 +42,26 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
       
       //executeSearch(query: query)
       
-      fetchYelpBusinesses()
+      fetchYelpBusinessDetails(withID: fav)
     }
   }
   
-  fileprivate func fetchYelpBusinesses() {
-    FavoritesViewController.favoritesList.forEach{ id in
-      let url = URL(string: "\(Strings.baseUrl)businesses/\(id)")
-      var request = URLRequest(url: url!)
-      request.setValue("Bearer \(Strings.apiKey)", forHTTPHeaderField: "Authorization")
-      request.httpMethod = "GET"
+  fileprivate func fetchYelpBusinessDetails(withID  id: String, using session: URLSession = .shared) {
+    session.request(.details(withID: id)) {
+      data, response, error in
+      guard error == nil else {
+        debugPrint(error!)
+        return
+      }
+      guard let data = data else { return }
       
-      URLSession.shared.dataTask(with: request) { (data, response, error) in
-        guard error == nil else {
-          debugPrint(error!)
-          return
-        }
-        
-        guard let data = data else { return }
-        
-        do {
-          let details = try JSONDecoder().decode(YLPBusinessDetails.self, from: data)
-          ///Update details var object
-        } catch let jsonError {
-          debugPrint(jsonError)
-        }
-      }.resume()
+      do {
+        let details = try JSONDecoder().decode(YLPBusinessDetails.self, from: data)
+        ///Update details var object
+        debugPrint(" ========================\n \(data)")
+      } catch let jsonError {
+        debugPrint(jsonError)
+      }
     }
   }
   

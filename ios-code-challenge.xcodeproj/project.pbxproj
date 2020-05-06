@@ -16,6 +16,7 @@
 		BD205BB6245FAC26001D7F0B /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD205BB5245FAC26001D7F0B /* TabBarViewController.swift */; };
 		BD205BB8245FAC74001D7F0B /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD205BB7245FAC74001D7F0B /* FavoritesViewController.swift */; };
 		BD205BBC245FBEED001D7F0B /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD205BBB245FBEEC001D7F0B /* BaseTableViewController.swift */; };
+		BD7BC8662462479A009005B6 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7BC8652462479A009005B6 /* Endpoint.swift */; };
 		BD91EC04245C902500E3325D /* NXTBusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91EC03245C902500E3325D /* NXTBusinessTableViewCell.swift */; };
 		BD91EC06245DFD1000E3325D /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */; };
 		BD9BC85F246003540089D06E /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9BC85E246003540089D06E /* Strings.swift */; };
@@ -73,6 +74,7 @@
 		BD205BB5245FAC26001D7F0B /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		BD205BB7245FAC74001D7F0B /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		BD205BBB245FBEEC001D7F0B /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
+		BD7BC8652462479A009005B6 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		BD91EC03245C902500E3325D /* NXTBusinessTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NXTBusinessTableViewCell.swift; sourceTree = "<group>"; };
 		BD91EC05245DFD1000E3325D /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		BD9BC85E246003540089D06E /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				C5CEF1DA20153618009D1571 /* YLPBusiness+CellForObject.h */,
 				C5CEF1DB20153618009D1571 /* YLPBusiness+CellForObject.m */,
 				BD9BC864246065C50089D06E /* YLPBusinessDetails.swift */,
+				BD7BC8652462479A009005B6 /* Endpoint.swift */,
 			);
 			path = YelpAPI;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				BD205BBC245FBEED001D7F0B /* BaseTableViewController.swift in Sources */,
 				BDE0C14E245F48330021D34E /* BaseScrollableViewController.swift in Sources */,
 				BD9BC85F246003540089D06E /* Strings.swift in Sources */,
+				BD7BC8662462479A009005B6 /* Endpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -681,7 +685,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "ios-code-challenge/ios-code-challenge-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -700,7 +704,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ios-code-challenge/ios-code-challenge-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
