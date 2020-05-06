@@ -41,12 +41,6 @@ class DetailViewController: BaseScrollableViewController {
       self.navigationController?.title = business?.name
       businessDetailsStack.isHidden = false
       updateFavoriteBarButtonState()
-      //debugPrint(business?.latitude ?? "ERROR NO LATITUDE")
-//      guard let coordinate = CLLocationCoordinate2DMake(business?.latitude as? CLLocationDegrees, business?.longitude as? CLLocationDegrees) else {
-//        return
-//      }
-//      
-//      self.dropPinZoomIn(coordinate: coordinate, name: business?.name ?? "")
       configureView()
     }
   }
@@ -182,12 +176,9 @@ class DetailViewController: BaseScrollableViewController {
   
   @objc private func onFavoriteBarButtonSelected(_ sender: Any) {
     _favorite.toggle()
-    /*var favorites = [Favorite]()
-    favorites = Favorites.global
-    favorites.append(Favorite.init(business: business!)!)
-    FavoritesHandler().setFavorites(favorites)*/
+    isFavorite ? DetailViewController.favoritesList.append(business!.identifier) :
+      DetailViewController.favoritesList.removeAll(where: {$0 == business!.identifier})
     
-    DetailViewController.favoritesList.append(business!.identifier)
     DetailViewController.saveFavoritesList(list: DetailViewController.favoritesList)
     
     updateFavoriteBarButtonState()
