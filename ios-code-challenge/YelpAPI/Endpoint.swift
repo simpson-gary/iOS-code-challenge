@@ -8,12 +8,6 @@
 
 import Foundation
 
-//enum Endpoint {
-//  case search(string: String)
-//  case details(id: String)
-//}
-let auth: KeyValuePairs = ["Authorization": "Bearer \(Strings.apiKey)"]
-
 struct Endpoint {
   var path: String
   var queryItems: [URLQueryItem] = []

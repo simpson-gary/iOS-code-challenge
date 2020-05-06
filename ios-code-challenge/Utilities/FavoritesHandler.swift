@@ -7,41 +7,53 @@
 //
 
 import Foundation
+//
+//struct Favorite: Codable {
+//  var business: YLPBusiness
+//  init(business: YLPBusiness) {
+//    self.business = business
+//  }
+//  
+//  func encode(to encoder: Encoder) throws {
+//    var container = encoder.container(keyedBy: CodingKey.self)
+//    try container
+//  }
+//}
 
-class Favorite : NSObject , NSCoding {
+class Favorite: NSObject, NSCoding {
   // MARK: Properties
   var business: YLPBusiness?
-  
+
   // MARK: Archiving Paths
   static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
   static let ArchiveURL = DocumentsDirectory.appendingPathComponent("Favorites")
-  
+
   // MARK: Initialization
   init?(business: YLPBusiness?) {
     // Initialize stored properties
     self.business = business
-    
+
     // Must call initilizer before returning nil.
     super.init()
   }
-  
+
   // MARK: Types
   struct PropertyKey {
     static let businessKey = "business"
   }
-  
+
   // MARK: NSCoding
   func encode(with aCoder: NSCoder) {
     aCoder.encode(business, forKey: PropertyKey.businessKey)
   }
-  
+
   required convenience init?(coder aDecoder: NSCoder) {
     let business = aDecoder.decodeObject(forKey: PropertyKey.businessKey) as? YLPBusiness
-    
+
     // Must call designated initilizer.
     self.init(business: business)
   }
-  
+
 }
 
 

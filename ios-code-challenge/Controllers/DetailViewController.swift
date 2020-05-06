@@ -23,7 +23,7 @@ class DetailViewController: BaseScrollableViewController {
   static let favoritesKey = "iosCodeChallenge.favorites"
   static var favoritesList = [String]()
   
-  @objc var business: YLPBusiness? {
+  var businessDetails: YLPBusinessDetails? {
     didSet {
       self.navigationController?.title = business?.name
       businessDetailsStack.isHidden = false
@@ -32,6 +32,21 @@ class DetailViewController: BaseScrollableViewController {
       let coordinate = CLLocationCoordinate2DMake(business?.latitude as! CLLocationDegrees, business?.longitude as! CLLocationDegrees)
       
       self.dropPinZoomIn(coordinate: coordinate, name: business?.name ?? "")
+      configureView()
+    }
+  }
+  
+  @objc var business: YLPBusiness? {
+    didSet {
+      self.navigationController?.title = business?.name
+      businessDetailsStack.isHidden = false
+      updateFavoriteBarButtonState()
+      debugPrint(business?.latitude ?? "ERROR NO LATITUDE")
+//      guard let coordinate = CLLocationCoordinate2DMake(business?.latitude as? CLLocationDegrees, business?.longitude as? CLLocationDegrees) else {
+//        return
+//      }
+//      
+//      self.dropPinZoomIn(coordinate: coordinate, name: business?.name ?? "")
       configureView()
     }
   }
@@ -167,10 +182,10 @@ class DetailViewController: BaseScrollableViewController {
   
   @objc private func onFavoriteBarButtonSelected(_ sender: Any) {
     _favorite.toggle()
-    var favorites = [Favorite]()
+    /*var favorites = [Favorite]()
     favorites = Favorites.global
     favorites.append(Favorite.init(business: business!)!)
-    FavoritesHandler().setFavorites(favorites)
+    FavoritesHandler().setFavorites(favorites)*/
     
     DetailViewController.favoritesList.append(business!.identifier)
     DetailViewController.saveFavoritesList(list: DetailViewController.favoritesList)

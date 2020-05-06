@@ -46,8 +46,7 @@ class TabBarViewController: UITabBarController {
   
   // MARK: - Navigation
   @objc func transitionDetailView(cell: NXTBusinessTableViewCell) {
-    
-    debugPrint("TabBarViewController:: transitionDetailView: business = #\(cell.business?.name ?? "") tapped.")
+    //debugPrint("TabBarViewController:: transitionDetailView: business = #\(cell.business?.name ?? "") tapped.")
     
     detailViewController.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
     detailViewController.navigationItem.leftItemsSupplementBackButton = true

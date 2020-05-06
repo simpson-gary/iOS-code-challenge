@@ -22,15 +22,16 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    updateDataSource(Favorites.global.compactMap({$0.business}))
+    FavoritesViewController.favoritesList = FavoritesViewController.loadFavoritesList()
+    queryForFavorites()
+    //updateDataSource(Favorites.global.compactMap({$0.business}))
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
     self.tabBarController?.navigationItem.titleView = titleLabel
-    //queryForFavorites()
+    
   }
   
   
@@ -59,6 +60,11 @@ class FavoritesViewController: BaseTableViewController<Any, NXTBusinessTableView
         let details = try JSONDecoder().decode(YLPBusinessDetails.self, from: data)
         ///Update details var object
         debugPrint(" ========================\n \(data)")
+        let business = YLPBusiness.init(variables: details.name ?? "", details.image_url!, details.price!, NSNumber(value: details.rating!), details.id!, NSNumber(value: details.review_count!))
+        
+        DispatchQueue.main.async {
+          self.updateDataSource([business])
+        }
       } catch let jsonError {
         debugPrint(jsonError)
       }
