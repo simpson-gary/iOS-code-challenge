@@ -2,7 +2,7 @@
 //  DetailViewController.swift
 //  ios-code-challenge
 //
-//  Created by Joe Rocca on 5/31/19.
+//  Created by Gary Simpson on 5/31/19.
 //  Copyright © 2019 Dustin Lange. All rights reserved.
 //
 

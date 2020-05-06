@@ -14,7 +14,7 @@ class NXTBusinessTableViewCell: UITableViewCell {
     didSet {
       businessNameLabel.text = business?.name
       businessRatingCount.text = "★\(business?.rating.stringValue ?? "-") ∙ (\(business?.reviewCount ?? 0))"
-      businessMilesLabel.text = "\(business?.distance.getMiles() ?? "0m")"
+      businessMilesLabel.text = "\(business?.distance.getMiles() ?? "--m")"
       businessCaptionLabel.text = business?.categories
       businessImage.image = business?.image
     }

@@ -46,3 +46,27 @@ struct YLPBusinessDetails: Decodable {
   let price: String?
   let hours: [Hours]?
 }
+
+
+extension YLPBusinessDetails {
+  func toYLPBusiness() -> YLPBusiness {
+    let business = YLPBusiness.init(variables: self.name ?? "", self.image_url!,
+                                    self.price!, NSNumber(value: self.rating!),
+                                    self.id!, NSNumber(value: self.review_count!),
+                                    self.getCategoryString(from: self.categories!),
+                                    NSNumber(value: self.coordinates?.latitude ?? 1000.123),
+                                    NSNumber(value: self.coordinates?.longitude ?? 1000))
+    
+    return business
+  }
+  
+  func getCategoryString(from categories: [Categories]) -> String{
+    var string = ""
+    categories.forEach{ category in
+      string.append("\(category.title!), ")
+    }
+    string.removeLast()
+    string.removeLast()
+    return string
+  }
+}
