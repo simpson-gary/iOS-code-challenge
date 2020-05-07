@@ -14,6 +14,8 @@ protocol UpdateMapView {
 }
 
 class DetailViewController: BaseScrollableViewController {
+  var mapHeightConstraint: NSLayoutConstraint?
+  var imageWidthConstraint: NSLayoutConstraint?
   
   var initialLocation: CLLocation?
   let regionRadius: CLLocationDistance = 1000
@@ -134,10 +136,6 @@ class DetailViewController: BaseScrollableViewController {
     
     DetailViewController.favoritesList = DetailViewController.loadFavoritesList()
     
-//    searchCompleter.delegate = self as! MKLocalSearchCompleterDelegate
-//    searchCompleter.region = MKCoordinateRegion(MKMapRect.world)
-    
-    //        configureView()
     navigationItem.rightBarButtonItems = [favoriteBarButtonItem]
     setLayout()
   }
